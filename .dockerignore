@@ -1,0 +1,10 @@
+node_modules
+dist
+.angular
+.git
+.env
+coverage
+backend/target
+backend/uploads
+uploads
+*.log

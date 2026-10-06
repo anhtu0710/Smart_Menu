@@ -1,0 +1,12 @@
+package com.smartmenu.repository;
+
+import com.smartmenu.entity.ProductAnalysis;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface ProductAnalysisRepository extends JpaRepository<ProductAnalysis, Long> {
+    List<ProductAnalysis> findBySessionId(Long sessionId);
+}

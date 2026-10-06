@@ -1,0 +1,56 @@
+<div class="coffee-template-wrapper menu-render-root" id="renderedMenuContainer">
+
+  <!-- NO DATA PLACEHOLDER -->
+  <div *ngIf="!blueprint || !blueprint.sections || blueprint.sections.length === 0" class="empty-blueprint-box">
+    <div class="empty-icon">📜</div>
+    <div class="empty-text">Đang khởi tạo VisualMenuBlueprint từ dữ liệu Session...</div>
+  </div>
+
+  <!-- MAIN FINAL MENU CONTAINER -->
+  <div *ngIf="blueprint && blueprint.sections && blueprint.sections.length > 0" class="template-pages-list">
+
+    <!-- ACTION TOOLBAR -->
+    <div class="final-menu-toolbar" *ngIf="finalImageUrl">
+      <div class="toolbar-actions">
+        <button class="btn-action btn-fullscreen" (click)="toggleFullscreenModal()">
+          🔍 Xem Toàn Màn Hình
+        </button>
+      </div>
+    </div>
+
+
+    <!-- HIGH-RES AI ARTWORK DISPLAY (ONLY DISPLAYS BACKEND GENERATED PNG) -->
+    <div *ngIf="finalImageUrl && !isGeneratingImage" class="final-menu-composite-box" [style.aspect-ratio]="aspectRatio">
+      <img [src]="finalImageUrl" 
+           alt="Final SmartMenu AI Artwork" 
+           class="composite-rendered-img"
+           (load)="onFinalImageLoaded()"
+           (error)="onFinalImageError($event)" />
+    </div>
+
+    <!-- AI GENERATING LOADING STATE (ZERO TEMPLATE FALLBACK) -->
+    <div *ngIf="isGeneratingImage" class="ai-generating-placeholder">
+      <div class="spinner-pulse"></div>
+      <div class="generating-title">🎨 AI Multimodal Designer đang tạo Artwork...</div>
+      <div class="generating-subtitle">Phân tích phong cách từ ảnh mẫu và tích hợp 100% dữ liệu kinh doanh thời gian thực.</div>
+    </div>
+
+    <!-- AI GENERATION FAILED ERROR STATE (ZERO TEMPLATE FALLBACK) -->
+    <div *ngIf="isImageError && !isGeneratingImage && !finalImageUrl" class="ai-error-placeholder">
+      <div class="error-icon">⚠️</div>
+      <div class="error-title">AI_ARTWORK_GENERATION_FAILED</div>
+      <div class="error-desc">Không thể tạo tác phẩm menu từ AI Designer. Hệ thống từ chối hạ cấp về demo renderer.</div>
+      <button class="btn-retry-generate" (click)="fetchFinalMenuImage()">🔄 Thử lại sinh menu</button>
+    </div>
+
+  </div>
+
+  <!-- FULLSCREEN PREVIEW MODAL -->
+  <div *ngIf="isFullscreenModalOpen && finalImageUrl" class="fullscreen-modal-overlay" (click)="toggleFullscreenModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="modal-close-btn" (click)="toggleFullscreenModal()">✕ Đóng</button>
+      <img [src]="finalImageUrl" alt="Final Menu Fullscreen Preview" class="modal-preview-img" />
+    </div>
+  </div>
+
+</div>

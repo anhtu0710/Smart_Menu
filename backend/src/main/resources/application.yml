@@ -1,0 +1,79 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    session:
+      cookie:
+        http-only: true
+        same-site: lax
+        secure: ${SESSION_SECURE:false}
+
+app:
+  cors:
+    allowed-origins: ${FRONTEND_URL:http://localhost:4200}
+  payment:
+    mock-enabled: ${PAYMENT_MOCK_ENABLED:false}
+    webhook-token: ${PAYMENT_WEBHOOK_TOKEN:}
+
+spring:
+  application:
+    name: smartmenu-backend
+
+
+  datasource:
+    url: ${DB_URL:jdbc:sqlserver://localhost:1433;databaseName=SmartMenuDB;encrypt=false;trustServerCertificate=true}
+    username: ${DB_USERNAME:sa}
+    password: ${DB_PASSWORD:}
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+
+  jpa:
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO:update}
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+
+    show-sql: true
+
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServerDialect
+        format_sql: true
+
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+
+  jackson:
+    time-zone: Asia/Ho_Chi_Minh
+
+
+
+gemini:
+  api:
+    key: ${GEMINI_API_KEY:YOUR_GEMINI_API_KEY}
+    url: ${GEMINI_API_URL:https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent}
+  image:
+    model: ${GEMINI_IMAGE_MODEL:gemini-3.1-flash-image}
+  interactions:
+    api:
+      url: ${GEMINI_INTERACTIONS_URL:https://generativelanguage.googleapis.com/v1beta/interactions}
+
+ai:
+  image:
+    provider: ${AI_IMAGE_PROVIDER:pollinations}
+    model: ${AI_IMAGE_MODEL:flux}
+    endpoint: ${AI_IMAGE_ENDPOINT:https://image.pollinations.ai/prompt}
+    width: ${AI_IMAGE_WIDTH:768}
+    height: ${AI_IMAGE_HEIGHT:1024}
+
+
+
+logging:
+  level:
+    com.smartmenu: INFO
+    org.hibernate.SQL: INFO

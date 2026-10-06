@@ -1,0 +1,69 @@
+<footer class="luxury-footer">
+  <div class="footer-container">
+    <div class="footer-grid">
+      <!-- Cột 1: Thương hiệu -->
+      <div class="footer-col col-brand">
+        <a routerLink="/" class="footer-logo">
+          <span class="logo-text">SMART <span class="logo-subtext">MENU</span></span>
+        </a>
+        <p class="brand-description">
+          Elevating prestigious coffee houses with intelligent menu engineering and luxury visual design. Boost your average order value effortlessly.
+        </p>
+        <div class="social-links">
+          <a href="#" class="social-icon">Instagram</a>
+          <a href="#" class="social-icon">LinkedIn</a>
+          <a href="#" class="social-icon">Pinterest</a>
+        </div>
+      </div>
+
+      <!-- Cột 2: Liên kết nhanh -->
+      <div class="footer-col">
+        <h4 class="col-title">Navigation</h4>
+        <ul class="col-links">
+          <li><a routerLink="/">Home Platform</a></li>
+          <li><a routerLink="/dichvu">Core Features</a></li>
+          <li><a routerLink="/lienhe">Liên Hệ</a></li>
+          <li><a routerLink="/showcase">Design Showcase</a></li>
+        </ul>
+      </div>
+
+      <!-- Cột 3: Giải pháp kinh doanh -->
+      <div class="footer-col">
+        <h4 class="col-title">Solutions</h4>
+        <ul class="col-links">
+          <li><a href="#">Menu Engineering</a></li>
+          <li><a href="#">Coffee Shop Psychology</a></li>
+          <li><a href="#">AI Visual Optimization</a></li>
+          <li><a href="#">Revenue Diagnostics</a></li>
+        </ul>
+      </div>
+
+      <!-- Cột 4: Đăng ký bản tin -->
+      <div class="footer-col col-newsletter">
+        <h4 class="col-title">The Journal</h4>
+        <p class="newsletter-desc">Subscribe to receive exclusive insights on F&B marketing, design trends, and pricing tactics.</p>
+        <form class="newsletter-form" (submit)="$event.preventDefault()">
+          <input type="email" placeholder="Your email address" class="newsletter-input" required />
+          <button type="submit" class="newsletter-btn">
+            <span class="btn-arrow">⟶</span>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Bản quyền & Pháp lý -->
+    <div class="footer-bottom">
+      <div class="copyright-text">
+        &copy; {{ currentYear }} AURA MENU. All rights reserved.
+      </div>
+      <div class="footer-badge">
+        Crafted for prestigious coffee houses
+      </div>
+      <div class="bottom-links">
+        <a href="#">Privacy Policy</a>
+        <span class="bullet">•</span>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>

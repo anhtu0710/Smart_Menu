@@ -1,0 +1,15 @@
+/* RegisterComponent Stylesheet - Split Screen Dark Glassmorphism */
+@import '../login/login.component.scss';
+
+/* Custom style cho link điều khoản con */
+.inner-terms-link {
+  color: #f26522;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #ff793f;
+    text-decoration: underline;
+  }
+}

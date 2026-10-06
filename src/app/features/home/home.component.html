@@ -1,0 +1,445 @@
+<div class="home-wrapper">
+  <!-- 1. Hero Section -->
+  <section class="hero-section">
+    <!-- Hình nền mờ ảo quán cafe sang trọng -->
+    <div class="hero-bg-image-wrapper">
+      <div class="hero-bg-overlay"></div>
+    </div>
+
+    <div class="container hero-container">
+      <div class="hero-left">
+        <h1 class="hero-title">
+          <span class="highlight-title-gold">Thiết Kế Menu Chuyên Nghiệp</span>
+          <span class="highlight-title-orange"> AI</span>
+        </h1>
+
+        <!-- Bullet points danh sách tính năng như trong ảnh -->
+        <ul class="hero-bullet-list">
+          <li><span class="bullet-dot"></span> Miễn phí trải nghiệm</li>
+          <li><span class="bullet-dot"></span> Thiết kế cực kỳ dễ dàng</li>
+          <li><span class="bullet-dot"></span> AI tạo mẫu nhanh chóng</li>
+          <li><span class="bullet-dot"></span> Tương tác online trực tiếp</li>
+        </ul>
+
+        <div class="hero-buttons">
+          <button class="btn-primary-red" (click)="onStartDesigning()">Thiết kế menu ngay</button>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <!-- Khối Slider các tấm thực đơn kẹp gỗ (Clipboards) -->
+        <div class="clipboard-slider-container">
+          <!-- Mũi tên trái -->
+          <button class="slider-arrow arrow-left" (click)="prevSlide()">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
+          </button>
+
+          <div class="clipboards-row">
+            <div *ngFor="let menu of heroMenus; let i = index" class="clipboard-card"
+              [class.active]="i === activeSlideIndex()"
+              [class.left-slide]="i === (activeSlideIndex() === 0 ? heroMenus.length - 1 : activeSlideIndex() - 1)"
+              [class.right-slide]="i === (activeSlideIndex() === heroMenus.length - 1 ? 0 : activeSlideIndex() + 1)"
+              (click)="selectSlide(i)">
+              <div class="wood-board">
+                <div class="metal-clip"></div>
+                <div class="board-paper">
+                  <img [src]="menu.image" [alt]="menu.name" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mũi tên phải -->
+          <button class="slider-arrow arrow-right" (click)="nextSlide()">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Section "Khó khăn" -->
+  <section class="troubles-section">
+    <div class="container">
+      <div class="section-header text-center">
+        <h2 class="section-title">Bạn đang gặp khó khăn khi thiết kế menu?</h2>
+        <div class="title-line"></div>
+      </div>
+
+      <div class="troubles-grid">
+        <!-- Khó khăn 1 -->
+        <div class="trouble-card">
+          <div class="trouble-icon icon-red">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+          </div>
+          <h4>Menu chưa thu hút</h4>
+          <p>Bố cục rối mắt, thiếu điểm nhấn khiến khách hàng bối rối và khó khăn khi đưa ra lựa chọn món uống.</p>
+        </div>
+
+        <!-- Khó khăn 2 -->
+        <div class="trouble-card">
+          <div class="trouble-icon icon-blue">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+          </div>
+          <h4>Không biết món nào nổi bật</h4>
+          <p>Thiếu dữ liệu phân tích để xác định chính xác các món bán chạy và món đem lại biên lợi nhuận cao.</p>
+        </div>
+
+        <!-- Khó khăn 3 -->
+        <div class="trouble-card">
+          <div class="trouble-icon icon-gold">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+          </div>
+          <h4>Tốn thời gian & chi phí</h4>
+          <p>Thiết kế thủ công mất nhiều thời gian, trong khi việc thuê ngoài designer chuyên nghiệp lại có chi phí cực
+            kỳ đắt đỏ.</p>
+        </div>
+
+        <!-- Khó khăn 4 -->
+        <div class="trouble-card">
+          <div class="trouble-icon icon-green">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+            </svg>
+          </div>
+          <h4>Cập nhật thủ công</h4>
+          <p>Mỗi khi thay đổi giá hoặc thêm món mới, bạn phải thiết kế và in ấn lại toàn bộ rất phiền phức và dễ sai
+            sót.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Section "Quy trình 4 bước" -->
+  <section class="steps-section">
+    <div class="container">
+      <div class="section-header text-center">
+        <h2 class="section-title">Chỉ với 4 bước đơn giản</h2>
+        <div class="title-line"></div>
+      </div>
+
+      <div class="steps-grid">
+        <!-- Bước 1 -->
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <div class="step-icon-wrapper">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+          </div>
+          <h4>Tải menu cũ lên</h4>
+          <p>Upload menu hiện tại của bạn dưới dạng hình ảnh hoặc file PDF.</p>
+        </div>
+
+        <div class="step-arrow">⟶</div>
+
+        <!-- Bước 2 -->
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <div class="step-icon-wrapper">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+              <polyline points="10 9 9 9 8 9" />
+            </svg>
+          </div>
+          <h4>Tải dữ liệu kinh doanh</h4>
+          <p>Tải lên file Excel ghi nhận dữ liệu bán hàng, doanh thu thực tế.</p>
+        </div>
+
+        <div class="step-arrow">⟶</div>
+
+        <!-- Bước 3 -->
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <div class="step-icon-wrapper">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+              <path d="M12 6v6l4 2" />
+            </svg>
+          </div>
+          <h4>Chọn phong cách</h4>
+          <p>Lựa chọn mẫu thiết kế, màu sắc, font chữ phù hợp thương hiệu quán.</p>
+        </div>
+
+        <div class="step-arrow">⟶</div>
+
+        <!-- Bước 4 -->
+        <div class="step-card">
+          <div class="step-num">04</div>
+          <div class="step-icon-wrapper">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+            </svg>
+          </div>
+          <h4>AI tạo menu mới</h4>
+          <p>Nhận ngay bản thiết kế menu tuyệt đẹp, tối ưu hóa kích thích mua hàng.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Section "Trước & Sau" (So sánh) -->
+  <section class="compare-section">
+    <div class="container compare-container">
+      <div class="compare-left">
+        <div class="hero-badge">✦ SỰ KHÁC BIỆT KỲ DIỆU</div>
+        <h2 class="section-title">Trước & sau khi dùng SmartMenu</h2>
+        <p class="compare-desc">
+          SmartMenu giúp bạn đổi mới menu chuyên nghiệp hơn, tạo các khối thu hút thị giác để làm nổi bật các món đồ
+          uống đặc trưng (Signature), từ đó thúc đẩy quyết định chọn món của khách hàng và gia tăng doanh số.
+        </p>
+        <button class="btn-secondary">Xem thêm mẫu menu</button>
+      </div>
+
+      <div class="compare-right">
+        <div class="compare-container-right">
+          <!-- Bộ chọn style menu có thể click -->
+          <div class="style-selector">
+            <span class="selector-label">✦ Nhấp chọn phong cách menu thiết kế:</span>
+            <div class="selector-buttons">
+              <button class="btn-select-style btn-style-gold" [class.active]="selectedStyle() === 'gold'"
+                (click)="selectStyle('gold')">
+                Obsidian Gold
+              </button>
+              <button class="btn-select-style btn-style-emerald" [class.active]="selectedStyle() === 'emerald'"
+                (click)="selectStyle('emerald')">
+                Emerald Mint
+              </button>
+              <button class="btn-select-style btn-style-rustic" [class.active]="selectedStyle() === 'rustic'"
+                (click)="selectStyle('rustic')">
+                Rustic Wood
+              </button>
+            </div>
+          </div>
+
+          <div class="compare-wrapper">
+            <!-- Menu trước (Kem nhạt, đơn giản) -->
+            <div class="menu-before-card">
+              <div class="menu-status-tag tag-before">TRƯỚC</div>
+              <div class="before-menu-content">
+                <div class="menu-title-plain">COFFEE SHOP</div>
+                <div class="menu-divider-plain"></div>
+                <div class="plain-items">
+                  <div class="plain-item">
+                    <span>Cà phê đen</span>
+                    <span>.......................................</span>
+                    <span>25.000đ</span>
+                  </div>
+                  <div class="plain-item">
+                    <span>Cà phê sữa</span>
+                    <span>.......................................</span>
+                    <span>29.000đ</span>
+                  </div>
+                  <div class="plain-item">
+                    <span>Bạc xỉu</span>
+                    <span>.......................................</span>
+                    <span>35.000đ</span>
+                  </div>
+                  <div class="plain-item">
+                    <span>Trà đào cam sả</span>
+                    <span>.......................................</span>
+                    <span>45.000đ</span>
+                  </div>
+                  <div class="plain-item">
+                    <span>Trà sữa Aura</span>
+                    <span>.......................................</span>
+                    <span>49.000đ</span>
+                  </div>
+                  <div class="plain-item">
+                    <span>Nước cam ép</span>
+                    <span>.......................................</span>
+                    <span>40.000đ</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mũi tên chuyển đổi -->
+            <div class="compare-separator">
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="var(--color-gold)" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </div>
+
+            <!-- Menu sau (Hình ảnh thiết kế menu thực tế thay đổi khi click) -->
+            <div class="menu-after-card" [class.style-gold]="selectedStyle() === 'gold'"
+              [class.style-emerald]="selectedStyle() === 'emerald'" [class.style-rustic]="selectedStyle() === 'rustic'">
+              <div class="menu-status-tag tag-after">SAU</div>
+              <div class="menu-after-image-wrapper">
+                <img [src]="'images/menu-' + selectedStyle() + '.png'" alt="SmartMenu Optimized Design"
+                  class="compare-menu-after-image" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Section "Tính năng nổi bật" -->
+  <section class="features-section">
+    <div class="container">
+      <div class="section-header text-center">
+        <h2 class="section-title">Tính năng nổi bật</h2>
+        <div class="title-line"></div>
+      </div>
+
+      <div class="features-grid">
+        <!-- Tính năng 1 -->
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
+          </div>
+          <h4>Thiết kế bằng AI</h4>
+          <p>AI tự động sắp xếp bố cục menu cân đối, trực quan và chuyên nghiệp chỉ trong tích tắc.</p>
+        </div>
+
+        <!-- Tính năng 2 -->
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21.21 15.89A10 10 0 1 1 8 2.83M22 12A10 10 0 0 0 12 2v10z" />
+            </svg>
+          </div>
+          <h4>Phân tích thông minh</h4>
+          <p>Phân tích hiệu suất bán hàng của từng món để xác định độ phổ biến và đóng góp lợi nhuận.</p>
+        </div>
+
+        <!-- Tính năng 3 -->
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+            </svg>
+          </div>
+          <h4>Gợi ý món nổi bật</h4>
+          <p>Đưa ra đề xuất đặt các món có lợi nhuận cao vào vị trí trung tâm thu hút ánh nhìn khách hàng.</p>
+        </div>
+
+        <!-- Tính năng 4 -->
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+          </div>
+          <h4>Combo & Upsell</h4>
+          <p>Tự động đề xuất thiết lập các combo đồ uống kèm bánh ngọt nhằm kích thích tăng giá trị đơn hàng.</p>
+        </div>
+
+        <!-- Tính năng 5 -->
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+              <line x1="9" y1="3" x2="9" y2="21" />
+              <line x1="15" y1="3" x2="15" y2="21" />
+              <line x1="3" y1="9" x2="21" y2="9" />
+              <line x1="3" y1="15" x2="21" y2="15" />
+            </svg>
+          </div>
+          <h4>Mẫu menu đa dạng</h4>
+          <p>Thư viện hàng trăm mẫu thiết kế sang trọng, thời thượng tối ưu riêng cho các quán cà phê.</p>
+        </div>
+
+        <!-- Tính năng 6 -->
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+          </div>
+          <h4>Xuất file nhanh chóng</h4>
+          <p>Xuất bản file PDF để in ấn hoặc ảnh độ phân giải cao PNG để hiển thị trên thiết bị di động.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Section Stats (Thống kê vắt ngang màu tối) -->
+  <section class="stats-section">
+    <div class="container stats-container">
+      <div class="stats-item">
+        <h2>500+</h2>
+        <p>Nhà hàng & quán cà phê đang sử dụng</p>
+      </div>
+      <div class="stats-item">
+        <h2>30%+</h2>
+        <p>Tăng doanh thu trung bình sau khi tối ưu</p>
+      </div>
+      <div class="stats-item">
+        <h2>24/7</h2>
+        <p>Hỗ trợ đối tác & vận hành liên tục</p>
+      </div>
+      <div class="stats-item">
+        <h2>1000+</h2>
+        <p>Mẫu menu chuyên nghiệp sẵn sàng</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Section CTA & Sandbox -->
+  <section class="cta-section">
+    <div class="container cta-container">
+      <div class="hero-badge">✦ SẴN SÀNG ĐỘT PHÁ DOANH THU</div>
+      <h2 class="cta-title">Gói dịch vụ phù hợp với bạn</h2>
+      <p class="cta-desc">
+        Chọn gói phù hợp để bắt đầu hành trình nâng tầm thiết kế menu quán cà phê của bạn ngay hôm nay.
+      </p>
+      <div class="cta-buttons">
+        <button class="btn-primary" (click)="onStartDesigning()">Dùng thử miễn phí</button>
+        <button class="btn-secondary" routerLink="/lienhe">Liên hệ tư vấn</button>
+      </div>
+
+      <!-- Giữ lại Sandbox để test trạng thái user của Header (tiện lợi cho lập trình) -->
+      <!--<div class="sandbox-container">
+        <h3 class="sandbox-title">✦ Sandbox Đăng Nhập Giả Lập ✦</h3>
+        <p class="sandbox-desc">
+          Click các nút bên dưới để chuyển đổi nhanh trạng thái đăng nhập hệ thống và xem sự thay đổi ở thanh Header.
+        </p>
+        <div class="sandbox-status">
+          Trạng thái hiện tại:
+          <span class="status-badge" [class.logged-in]="currentUser()" [class.logged-out]="!currentUser()">
+            {{ currentUser() ? 'Đã đăng nhập: ' + currentUser()?.name : 'Khách vãng lai (Chưa đăng nhập)' }}
+          </span>
+        </div>
+        <div class="sandbox-actions">
+          <button *ngIf="!currentUser()" class="btn-sandbox-login" (click)="login()">Simulate Đăng Nhập</button>
+          <button *ngIf="currentUser()" class="btn-sandbox-logout" (click)="logout()">Simulate Đăng Xuất</button>
+        </div>
+      </div> -->
+    </div>
+  </section>
+</div>

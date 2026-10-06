@@ -1,0 +1,83 @@
+/* System-wide Luxury Light Theme Styles */
+:root {
+  --font-primary: 'Outfit', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+
+  /* Luxurious Light Palette */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f6f8fa;
+  --bg-surface: #ffffff;
+  --bg-surface-hover: #f1f3f5;
+  
+  /* Brand Orange / Amber representing SmartMenu in the image */
+  --color-gold: #f26522;
+  --color-gold-bright: #ff7c3b;
+  --color-text-primary: #111827;
+  --color-text-secondary: #4b5563;
+  --color-text-muted: #9ca3af;
+  
+  --border-gold-muted: rgba(242, 101, 34, 0.12);
+  --border-white-muted: rgba(0, 0, 0, 0.06);
+
+  /* Glassmorphism & Shadow */
+  --glass-blur: blur(12px);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --shadow-premium: 0 20px 40px rgba(0, 0, 0, 0.04);
+  --shadow-gold: 0 8px 25px rgba(242, 101, 34, 0.18);
+  
+  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: all 0.2s ease;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-primary);
+  background-color: var(--bg-primary);
+  /* Chấm màu cam nhạt siêu mờ trên nền trắng */
+  background-image: radial-gradient(rgba(242, 101, 34, 0.04) 1.5px, transparent 1.5px);
+  background-size: 50px 50px;
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition-fast);
+}
+
+button {
+  font-family: var(--font-primary);
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: none;
+  transition: var(--transition-fast);
+}
+
+ul {
+  list-style: none;
+}
+
+/* Custom Scrollbar for Luxury feel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold-bright);
+}

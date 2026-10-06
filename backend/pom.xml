@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="
+         http://maven.apache.org/POM/4.0.0 
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+
+    <modelVersion>4.0.0</modelVersion>
+
+
+    <parent>
+
+        <groupId>org.springframework.boot</groupId>
+
+        <artifactId>spring-boot-starter-parent</artifactId>
+
+        <version>3.2.3</version>
+
+        <relativePath/>
+
+    </parent>
+
+
+
+    <groupId>com.smartmenu</groupId>
+
+    <artifactId>smartmenu-backend</artifactId>
+
+    <version>1.0.0</version>
+
+
+    <name>smartmenu-backend</name>
+
+    <description>
+        SmartMenu AI Platform Backend
+        Spring Boot + SQL Server + Gemini AI
+    </description>
+
+
+
+    <properties>
+
+
+        <java.version>17</java.version>
+
+
+        <poi.version>5.2.5</poi.version>
+
+
+    </properties>
+
+
+
+
+
+    <dependencies>
+
+
+
+        <!-- Spring Web REST API -->
+        <dependency>
+
+            <groupId>org.springframework.boot</groupId>
+
+            <artifactId>
+                spring-boot-starter-web
+            </artifactId>
+
+        </dependency>
+
+
+
+
+        <!-- Spring Data JPA -->
+
+        <dependency>
+
+            <groupId>org.springframework.boot</groupId>
+
+            <artifactId>
+                spring-boot-starter-data-jpa
+            </artifactId>
+
+        </dependency>
+
+
+
+
+
+        <!-- Validation -->
+
+        <dependency>
+
+            <groupId>org.springframework.boot</groupId>
+
+            <artifactId>
+                spring-boot-starter-validation
+            </artifactId>
+
+        </dependency>
+
+
+
+
+
+        <!-- Spring Security Crypto for BCryptPasswordEncoder -->
+
+        <dependency>
+
+            <groupId>org.springframework.security</groupId>
+
+            <artifactId>
+                spring-security-crypto
+            </artifactId>
+
+        </dependency>
+
+
+
+
+
+        <!-- SQL Server Driver -->
+
+        <dependency>
+
+            <groupId>
+                com.microsoft.sqlserver
+            </groupId>
+
+            <artifactId>
+                mssql-jdbc
+            </artifactId>
+
+            <scope>
+                runtime
+            </scope>
+
+        </dependency>
+
+
+
+
+
+
+
+        <!-- Apache POI Excel XLS/XLSX -->
+
+        <dependency>
+
+            <groupId>
+                org.apache.poi
+            </groupId>
+
+            <artifactId>
+                poi
+            </artifactId>
+
+            <version>
+                ${poi.version}
+            </version>
+
+        </dependency>
+
+
+
+
+        <dependency>
+
+            <groupId>
+                org.apache.poi
+            </groupId>
+
+            <artifactId>
+                poi-ooxml
+            </artifactId>
+
+            <version>
+                ${poi.version}
+            </version>
+
+        </dependency>
+
+
+
+
+
+
+
+        <!-- CSV Support -->
+
+        <dependency>
+
+            <groupId>
+                org.apache.commons
+            </groupId>
+
+            <artifactId>
+                commons-csv
+            </artifactId>
+
+            <version>
+                1.10.0
+            </version>
+
+        </dependency>
+
+
+
+
+
+
+
+        <!-- Apache Commons -->
+
+        <dependency>
+
+            <groupId>
+                org.apache.commons
+            </groupId>
+
+            <artifactId>
+                commons-lang3
+            </artifactId>
+
+        </dependency>
+
+
+
+
+
+
+
+        <!-- Lombok -->
+
+        <dependency>
+
+            <groupId>
+                org.projectlombok
+            </groupId>
+
+            <artifactId>
+                lombok
+            </artifactId>
+
+            <version>
+                1.18.36
+            </version>
+
+            <scope>
+                provided
+            </scope>
+
+        </dependency>
+
+
+
+
+
+
+
+        <!-- Jackson Java Time -->
+
+        <dependency>
+
+            <groupId>
+                com.fasterxml.jackson.datatype
+            </groupId>
+
+            <artifactId>
+                jackson-datatype-jsr310
+            </artifactId>
+
+        </dependency>
+
+
+
+
+
+
+
+        <!-- Test -->
+
+        <dependency>
+
+            <groupId>
+                org.springframework.boot
+            </groupId>
+
+            <artifactId>
+                spring-boot-starter-test
+            </artifactId>
+
+            <scope>
+                test
+            </scope>
+
+        </dependency>
+
+
+
+        <!-- Apache Batik for SVG Rendering -->
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-transcoder</artifactId>
+            <version>1.17</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-codec</artifactId>
+            <version>1.17</version>
+        </dependency>
+
+    </dependencies>
+
+
+
+
+
+
+
+    <build>
+
+
+        <plugins>
+
+
+
+            <!-- Spring Boot Build -->
+
+            <plugin>
+
+
+                <groupId>
+                    org.springframework.boot
+                </groupId>
+
+
+                <artifactId>
+                    spring-boot-maven-plugin
+                </artifactId>
+
+
+
+            </plugin>
+
+
+
+
+
+            <!-- Java Compiler -->
+
+            <plugin>
+
+
+                <groupId>
+                    org.apache.maven.plugins
+                </groupId>
+
+
+                <artifactId>
+                    maven-compiler-plugin
+                </artifactId>
+
+
+                <version>
+                    3.11.0
+                </version>
+
+
+
+                <configuration>
+
+
+                    <source>
+                        17
+                    </source>
+
+
+                    <target>
+                        17
+                    </target>
+
+
+                    <annotationProcessorPaths>
+
+
+                        <path>
+
+
+                            <groupId>
+                                org.projectlombok
+                            </groupId>
+
+
+                            <artifactId>
+                                lombok
+                            </artifactId>
+
+
+                            <version>
+                                1.18.36
+                            </version>
+
+
+                        </path>
+
+
+                    </annotationProcessorPaths>
+
+
+
+                </configuration>
+
+
+            </plugin>
+
+
+
+        </plugins>
+
+
+    </build>
+
+
+
+</project>

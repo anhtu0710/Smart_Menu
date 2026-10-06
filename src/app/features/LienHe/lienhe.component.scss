@@ -1,0 +1,343 @@
+/* LienHe Component Stylesheet - Dark Glassmorphism Theme */
+.features-page-wrapper {
+  --color-text-primary: #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.65);
+  --color-text-muted: rgba(255, 255, 255, 0.45);
+  --border-white-muted: rgba(255, 255, 255, 0.08);
+
+  position: relative;
+  background-image: url('/images/mysterious-coffee-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: var(--color-text-primary);
+  font-family: var(--font-primary);
+  min-height: 100vh;
+  padding-top: 100px;
+  padding-bottom: 60px;
+  z-index: 1;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(18, 18, 24, 0.45); // Lớp overlay tối mờ ảo
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    z-index: -1;
+    pointer-events: none;
+  }
+}
+
+.container {
+  width: min(1280px, calc(100% - 64px));
+  margin: 0 auto;
+}
+
+/* 1. Header Section */
+.contact-header-section {
+  text-align: center;
+  margin-bottom: 40px;
+
+  .seo-main-title {
+    font-size: clamp(24px, 3.5vw, 34px);
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+    margin: 0 0 12px 0;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .contact-sub-intro {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+}
+
+/* 2. Main Grid Layout */
+.contact-main-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 24px;
+  align-items: start;
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 3. Card Base (Dark Glassmorphism) */
+.contact-card-box {
+  background: rgba(18, 18, 24, 0.75);
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 30px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
+}
+
+.card-title-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 15px;
+
+  .icon-tag-glow {
+    font-size: 22px;
+    color: #f26522;
+    text-shadow: 0 0 10px rgba(242, 101, 34, 0.4);
+  }
+
+  h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+  }
+}
+
+/* 4. Form Styling */
+.contact-form-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-double-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+
+  @media (max-width: 576px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+
+    .required-mark {
+      color: #ff4757;
+      margin-left: 2px;
+    }
+  }
+
+  /* Style cho input, select, textarea */
+  .glow-style-input {
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13.5px;
+    color: #ffffff;
+    font-family: inherit;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    outline: none;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    &:focus {
+      border-color: #f26522;
+      background: rgba(242, 101, 34, 0.02);
+      box-shadow: 0 0 12px rgba(242, 101, 34, 0.3);
+    }
+  }
+
+  /* Styled select option dropdown */
+  .select-styled {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 14px;
+    padding-right: 40px;
+
+    option {
+      background-color: #121218;
+      color: #ffffff;
+      padding: 10px;
+    }
+  }
+
+  .textarea-styled {
+    resize: vertical;
+    min-height: 120px;
+  }
+}
+
+/* Nút gửi form liên hệ */
+.form-action-btn-box {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+
+  .btn-send-contact-glow {
+    background: linear-gradient(135deg, #f26522 0%, #d35400 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 32px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(242, 101, 34, 0.35);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+    .btn-icon-flash {
+      text-shadow: 0 0 5px #ffd700;
+    }
+
+    &:hover {
+      background: linear-gradient(135deg, #ff793f 0%, #e67e22 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(242, 101, 34, 0.55);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  .form-submit-note {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.45);
+    margin: 0;
+  }
+}
+
+/* 5. Address Details Styling */
+.contact-address-block {
+  font-style: normal;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 30px;
+}
+
+.contact-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+
+  .info-icon {
+    font-size: 18px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f26522;
+    flex-shrink: 0;
+  }
+
+  .info-text-wrapper {
+    h3 {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 4px 0;
+    }
+
+    p {
+      font-size: 12.5px;
+      color: rgba(255, 255, 255, 0.7);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .contact-link-item {
+      color: #f26522;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.25s ease;
+
+      &:hover {
+        color: #ff793f;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+/* 6. Google Maps Box */
+.google-maps-wrapper-box {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+  transition: border-color 0.3s ease;
+
+  &:hover {
+    border-color: rgba(242, 101, 34, 0.3);
+  }
+
+  .google-map-iframe {
+    display: block;
+    filter: grayscale(0.2) contrast(1.1) brightness(0.9);
+  }
+}
+
+/* 7. Custom Toast Alert Styling */
+.custom-toast-alert {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: rgba(18, 18, 24, 0.9);
+  border: 2px solid #2ecc71;
+  border-radius: 10px;
+  padding: 16px 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(46, 204, 113, 0.25);
+  backdrop-filter: blur(15px);
+  z-index: 9999;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  &.alert-active-status {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .toast-content-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .toast-success-spark {
+      font-size: 16px;
+      color: #2ecc71;
+      font-weight: bold;
+    }
+
+    .toast-text-msg {
+      font-size: 13px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+  }
+}

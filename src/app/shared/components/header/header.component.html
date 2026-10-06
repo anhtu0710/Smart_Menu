@@ -1,0 +1,91 @@
+<header class="luxury-header">
+  <div class="header-container">
+    <!-- Logo -->
+    <a routerLink="/" class="logo-area">
+      <!-- Sticker Cốc Cà Phê đỏ hồng sắc nét tách nền hoàn hảo bằng SVG -->
+      <svg viewBox="0 0 100 100" width="36" height="36" class="coffee-cup-sticker">
+        <defs>
+          <linearGradient id="cupRedGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ff3b30" />
+            <stop offset="60%" stop-color="#d30056" />
+            <stop offset="100%" stop-color="#800040" />
+          </linearGradient>
+          <linearGradient id="latteGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#f5cb93" />
+            <stop offset="100%" stop-color="#96582a" />
+          </linearGradient>
+        </defs>
+
+        <!-- Viền sticker màu trắng ôm sát cốc và quai -->
+        <path d="M 12,40 C 12,32 88,32 88,40 C 88,40 88,72 50,85 C 12,72 12,40 12,40 Z" fill="#ffffff"/>
+        <path d="M 68,42 C 86,42 98,54 84,68 C 76,76 68,70 68,70" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round"/>
+
+        <!-- Quai cốc đỏ thực tế -->
+        <path d="M 68,45 C 83,45 92,55 82,65 C 75,72 68,67 68,67" fill="none" stroke="url(#cupRedGrad)" stroke-width="6" stroke-linecap="round"/>
+
+        <!-- Thân cốc đỏ thực tế -->
+        <path d="M 16,42 C 16,35 84,35 84,42 C 84,42 84,70 50,81 C 16,70 16,42 16,42 Z" fill="url(#cupRedGrad)"/>
+        <!-- Ánh sáng phản chiếu -->
+        <path d="M 20,46 C 20,44 32,44 32,46 C 32,54 24,62 20,54 Z" fill="#ffffff" opacity="0.25"/>
+
+        <!-- Miệng cốc & Latte Art -->
+        <ellipse cx="50" cy="42" rx="31" ry="12" fill="#ffffff" />
+        <ellipse cx="50" cy="42" rx="28" ry="10" fill="url(#latteGrad)" />
+
+        <!-- Latte Art hình chiếc lá màu trắng ở giữa -->
+        <path d="M 50,49 C 48,45 44,43 50,37 C 56,43 52,45 50,49" fill="#ffffff"/>
+        <path d="M 50,47 C 43,42 41,39 50,35 C 59,39 57,42 50,47" fill="#ffffff" opacity="0.9"/>
+        <path d="M 50,44 C 38,39 36,36 50,33 C 64,36 62,39 50,44" fill="#ffffff" opacity="0.85"/>
+        <path d="M 50,34 C 47,32 47,30 50,28 C 53,30 53,32 50,34" fill="#ffffff"/>
+      </svg>
+      <span class="logo-text">SMART <span class="logo-subtext">MENU</span></span>
+    </a>
+
+    <!-- Navigation Menu -->
+    <nav class="nav-menu">
+      <ul>
+        <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">Trang
+            Chủ</a></li>
+        <li><a routerLink="/dichvu" routerLinkActive="active" class="nav-link">Dịch Vụ</a></li>
+        <li><a routerLink="/lienhe" routerLinkActive="active" class="nav-link">Liên Hệ</a></li>
+        <!--  <li><a routerLink="/showcase" routerLinkActive="active" class="nav-link">Showcase</a></li>-->
+      </ul>
+    </nav>
+
+    <!-- User Action Area -->
+    <div class="actions-area">
+      <!-- Guest View -->
+      <ng-container *ngIf="!currentUser(); else userView">
+        <button class="btn-login" routerLink="/login">Login</button>
+        <button class="btn-register" routerLink="/register">Register</button>
+      </ng-container>
+
+      <!-- Authenticated User View -->
+      <ng-template #userView>
+        <div class="user-profile-wrapper">
+          <button class="profile-trigger" (click)="toggleDropdown()">
+            <img [src]="currentUser()?.avatarUrl" alt="Avatar" class="user-avatar" />
+            <span class="username">{{ currentUser()?.name }}</span>
+            <span class="arrow-icon" [class.rotated]="showUserDropdown()">▾</span>
+          </button>
+
+          <!-- Luxury Dropdown Menu -->
+          <div class="luxury-dropdown" *ngIf="showUserDropdown()">
+            <div class="dropdown-header">
+              <p class="user-name-full">{{ currentUser()?.name }}</p>
+              <p class="user-email">{{ currentUser()?.email }}</p>
+            </div>
+            <ul class="dropdown-links">
+              <li><a routerLink="/dashboard"><span class="link-icon">⚡</span> Dashboard</a></li>
+              <li><a routerLink="/my-menus"><span class="link-icon">🗂️</span> My Menus</a></li>
+              <li><a routerLink="/settings"><span class="link-icon">⚙️</span> Settings</a></li>
+              <li class="divider"></li>
+              <li><button class="btn-logout" (click)="logout()"><span class="link-icon">logout</span> Sign Out</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,788 @@
+<div class="dichvu-page-wrapper">
+
+  <!-- TOP NAVIGATION HEADER BAR -->
+  <header class="top-header">
+    <!-- LEFT LOGO -->
+    <div class="header-logo-group">
+      <div class="logo-icon-badge">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+        </svg>
+      </div>
+      <div class="logo-text-box">
+        <div class="brand-title">SmartMenu</div>
+        <div class="brand-subtitle">Hệ thống đồng hành cùng chuỗi của bạn</div>
+      </div>
+    </div>
+
+    <!-- CENTER WORKFLOW STEPPER BAR -->
+    <div class="workflow-stepper">
+      <!-- Step 1 -->
+      <div class="step-item" [class.active]="currentStep() === 1" (click)="goToStep(1)">
+        <div class="step-badge step-1-badge">1</div>
+        <div class="step-info">
+          <div class="step-name">Tải dữ liệu</div>
+          <div class="step-desc">Upload menu & số liệu</div>
+        </div>
+      </div>
+
+      <div class="step-arrow">➔</div>
+
+      <!-- Step 2 -->
+      <div class="step-item" [class.active]="currentStep() === 2" (click)="goToStep(2)">
+        <div class="step-badge">2</div>
+        <div class="step-info">
+          <div class="step-name">Hệ thống phân tích</div>
+
+        </div>
+      </div>
+
+      <div class="step-arrow">➔</div>
+
+      <!-- Step 3 -->
+      <div class="step-item" [class.active]="currentStep() === 3" (click)="goToStep(3)">
+        <div class="step-badge">3</div>
+        <div class="step-info">
+          <div class="step-name">Tạo menu tối ưu</div>
+          <div class="step-desc">Đề xuất menu mới</div>
+        </div>
+      </div>
+
+      <div class="step-arrow">➔</div>
+
+      <!-- Step 4 -->
+      <div class="step-item" [class.active]="currentStep() === 4" (click)="goToStep(4)">
+        <div class="step-badge">4</div>
+        <div class="step-info">
+          <div class="step-name">Xuất hình ảnh</div>
+          <div class="step-desc">Tải xuống & sử dụng</div>
+        </div>
+      </div>
+    </div>
+
+  </header>
+
+  <!-- MAIN SERVICE PAGE CONTAINER -->
+  <div class="service-page">
+    <main class="service-layout">
+
+      <!-- LEFT COLUMN (~62% WIDTH / 1.63fr) -->
+      <div class="service-left">
+
+        <!-- SECTION 1: TẢI DỮ LIỆU -->
+        <section class="dashboard-card upload-section">
+          <div class="card-header-bar">
+            <div class="header-title-box">
+              <span class="card-num-badge">1</span>
+              <div class="card-main-title">TẢI DỮ LIỆU ĐẦU VÀO</div>
+            </div>
+            <div class="header-subtitle-text">Bắt đầu bằng việc tải lên menu hiện tại và dữ liệu kinh doanh của bạn
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="upload-grid">
+
+              <!-- SUB-BOX 1: TẢI MENU CỦ -->
+              <div class="upload-sub-box box-old-menu">
+                <div class="sub-box-header">
+                  <span class="sub-icon text-pink-400">📄</span>
+                  <div class="sub-title">Tải menu cũ</div>
+                </div>
+                <div class="sub-description">Kéo & thả file vào đây hoặc chọn file</div>
+
+                <div class="dropzone-box" [class.drag-over]="isOldMenuHover()" (dragover)="onDragOver($event, 'menu')"
+                  (dragleave)="onDragLeave($event, 'menu')" (drop)="onDropFile($event, 'menu')">
+
+                  <input type="file" id="oldMenuInput" (change)="onOldMenuSelected($event)" accept="image/*,.pdf"
+                    class="hidden-file-input" />
+
+                  <div *ngIf="!oldMenuName()" class="dropzone-inner">
+                    <div class="cloud-upload-icon cloud-orange">
+                      <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor">
+                        <path
+                          d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z" />
+                      </svg>
+                    </div>
+                    <div class="drop-text">Drag & Drop</div>
+                    <label for="oldMenuInput" class="btn-select-file btn-orange">Chọn file</label>
+                  </div>
+
+                  <!-- FILE SELECTED STATE -->
+                  <div *ngIf="oldMenuName()" class="file-loaded-state">
+                    <div class="loaded-icon">📄</div>
+                    <div class="loaded-name">{{ oldMenuName() }}</div>
+                    <button (click)="removeOldMenu()" class="btn-remove">✕</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SUB-BOX 2: TẢI FILE EXCEL / CSV -->
+              <div class="upload-sub-box box-biz-file">
+                <div class="sub-box-header">
+                  <span class="sub-icon text-emerald-400">📊</span>
+                  <div class="sub-title">Tải Excel / CSV</div>
+                </div>
+                <div class="sub-description">Kéo & thả file dữ liệu vào đây</div>
+
+                <div class="dropzone-box" [class.drag-over]="isBizFileHover()" (dragover)="onDragOver($event, 'biz')"
+                  (dragleave)="onDragLeave($event, 'biz')" (drop)="onDropFile($event, 'biz')">
+
+                  <input type="file" id="bizFileInput" (change)="onBusinessFileSelected($event)"
+                    accept=".xlsx,.xls,.csv" class="hidden-file-input" />
+
+                  <div *ngIf="!businessFileName()" class="dropzone-inner">
+                    <div class="cloud-upload-icon cloud-green">
+                      <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor">
+                        <path
+                          d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z" />
+                      </svg>
+                    </div>
+                    <div class="drop-text">Drag & Drop</div>
+                    <label for="bizFileInput" class="btn-select-file btn-green">Chọn file</label>
+                  </div>
+
+                  <!-- FILE SELECTED STATE -->
+                  <div *ngIf="businessFileName()" class="file-loaded-state">
+                    <div class="loaded-icon">📊</div>
+                    <div class="loaded-name">{{ businessFileName() }} ({{ businessFileSize() }})</div>
+                    <button (click)="removeBusinessFile()" class="btn-remove">✕</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SUB-BOX 3: BẢO MẬT DỮ LIỆU -->
+              <div class="upload-sub-box box-security">
+                <div class="sub-box-header">
+                  <span class="sub-icon text-blue-400">🛡️</span>
+                  <div class="sub-title">Bảo mật dữ liệu</div>
+                </div>
+                <div class="security-features-list">
+                  <div class="sec-item">
+                    <span class="sec-bullet">✓</span> Mã hóa dữ liệu tuyệt đối
+                  </div>
+                  <div class="sec-item">
+                    <span class="sec-bullet">✓</span> Phân tích hệ thống chuẩn xác
+                  </div>
+                  <div class="sec-item">
+                    <span class="sec-bullet">✓</span> Tối ưu theo mô hình coffe
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- ANALYZE BUTTON (CĂN TRÁI, 320PX X 46PX) -->
+            <div class="upload-action-row">
+              <button (click)="onStartAnalysis()" class="btn-start-analysis" [disabled]="isProcessing()">
+                <span *ngIf="!isProcessing()">🚀 BẮT ĐẦU PHÂN TÍCH</span>
+                <span *ngIf="isProcessing()">⏳ Đang phân tích AI...</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: AI PHÂN TÍCH KINH DOANH -->
+        <section class="dashboard-card analysis-section">
+          <div class="card-header-bar">
+            <div class="header-title-box">
+              <span class="card-num-badge">2</span>
+              <div>
+                <div class="card-main-title">Hệ thống PHÂN TÍCH KINH DOANH</div>
+                <div class="card-sub-description">Chỉ số và đánh giá chi tiết sau khi phân tích dữ liệu</div>
+              </div>
+            </div>
+            <div class="status-pill-badge" [class.analyzed]="hasAnalyzedData()">
+              <span class="status-dot"></span>
+              <span>{{ hasAnalyzedData() ? 'Đã phân tích' : 'Chưa có dữ liệu' }}</span>
+            </div>
+          </div>
+
+          <div class="card-body">
+
+            <!-- 4 METRIC CARDS GRID (100-120px HEIGHT) -->
+            <div class="metrics-grid">
+
+              <!-- STAT 1: TỔNG DOANH THU -->
+              <div class="stat-card card-revenue">
+                <div class="stat-header">
+                  <span class="stat-title">Tổng doanh thu</span>
+                  <span class="stat-icon icon-dollar">$</span>
+                </div>
+                <div class="stat-value">{{ totalRevenueStr() }}</div>
+              </div>
+
+              <!-- STAT 2: TỔNG MÓN BÁN RA -->
+              <div class="stat-card card-sales">
+                <div class="stat-header">
+                  <span class="stat-title">Tổng món bán ra</span>
+                  <span class="stat-icon icon-cart">🛒</span>
+                </div>
+                <div class="stat-value">{{ totalSalesStr() }}</div>
+              </div>
+
+              <!-- STAT 3: LỢI NHUẬN ƯỚC TÍNH -->
+              <div class="stat-card card-profit">
+                <div class="stat-header">
+                  <span class="stat-title">Lợi nhuận ước tính</span>
+                  <span class="stat-icon icon-bar">📈</span>
+                </div>
+                <div class="stat-value">{{ estimatedProfitStr() }}</div>
+              </div>
+
+              <!-- STAT 4: ĐỘ TỐI ƯU MENU -->
+              <div class="stat-card card-score">
+                <div class="stat-header">
+                  <span class="stat-title">Độ tối ưu menu</span>
+                  <span class="stat-icon icon-score">⚡</span>
+                </div>
+                <div class="stat-value">{{ menuOptimizationScoreStr() }}</div>
+              </div>
+
+            </div>
+
+            <!-- 3 PRODUCT ANALYSIS CARDS GRID -->
+            <div class="product-analysis-grid">
+
+              <!-- BOX 1: TOP MÓN BÁN CHẠY -->
+              <div class="product-card box-bestseller">
+                <div class="product-card-header text-orange-400">
+                  <span>🔥</span> Top món bán chạy
+                </div>
+                <div class="product-card-body">
+                  <div *ngIf="getTopSellersStructured().length > 0" class="structured-list">
+                    <div *ngFor="let item of getTopSellersStructured()" class="structured-row">
+                      <span class="rank-num">{{ item.rank }}</span>
+                      <span class="item-name">{{ item.name }}</span>
+                      <span class="item-stat">{{ item.quantity }} món</span>
+                    </div>
+                  </div>
+                  <div *ngIf="getTopSellersStructured().length === 0" class="empty-hint-text">
+                    {{ hasAnalyzedData() ? bestSellersText() : 'Chưa có dữ liệu' }}
+                  </div>
+                </div>
+              </div>
+
+              <!-- BOX 2: TOP MÓN LỢI NHUẬN CAO -->
+              <div class="product-card box-highprofit">
+                <div class="product-card-header text-emerald-400">
+                  <span>🏆</span> Top món lợi nhuận cao
+                </div>
+                <div class="product-card-body">
+                  <div *ngIf="getHighProfitStructured().length > 0" class="structured-list">
+                    <div *ngFor="let item of getHighProfitStructured()" class="structured-row">
+                      <span class="rank-num">{{ item.rank }}</span>
+                      <span class="item-name">{{ item.name }}</span>
+                      <span class="item-stat">{{ item.margin }}%</span>
+                    </div>
+                  </div>
+                  <div *ngIf="getHighProfitStructured().length === 0" class="empty-hint-text">
+                    {{ hasAnalyzedData() ? highProfitText() : 'Chưa có dữ liệu' }}
+                  </div>
+                </div>
+              </div>
+
+              <!-- BOX 3: MÓN CẦN GIẢM ƯU TIÊN -->
+              <div class="product-card box-lowpriority">
+                <div class="product-card-header text-rose-400">
+                  <span>🔻</span> Món cần giảm ưu tiên
+                </div>
+                <div class="product-card-body">
+                  <div *ngIf="getLowPriorityStructured().length > 0" class="structured-list">
+                    <div *ngFor="let item of getLowPriorityStructured(); let i = index" class="structured-row">
+                      <span class="rank-num">{{ i + 1 }}</span>
+                      <span class="item-name">{{ item.name }}</span>
+                    </div>
+                  </div>
+                  <div *ngIf="getLowPriorityStructured().length === 0" class="empty-hint-text">
+                    {{ hasAnalyzedData() ? lowPriorityText() : 'Chưa có dữ liệu' }}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- BOTTOM GRID: DOANH THU THEO NHÓM + NHẬN ĐỊNH AI -->
+            <div class="analysis-bottom-grid">
+
+              <!-- LEFT: DOANH THU THEO NHÓM MÓN -->
+              <div class="detail-panel panel-chart">
+                <div class="panel-title">Doanh thu theo nhóm món</div>
+                <div class="panel-body">
+                  <div *ngIf="!hasAnalyzedData()" class="empty-placeholder">
+                    <div class="placeholder-desc">Biểu đồ sẽ xuất hiện sau khi hệ thống xử lý dữ liệu</div>
+                  </div>
+
+                  <div *ngIf="hasAnalyzedData()" class="live-chart-list">
+                    <div *ngFor="let item of categoryRevenueList()" class="chart-row-item">
+                      <div class="item-label-group">
+                        <span class="item-name">{{ item.name }}</span>
+                        <span class="item-val">{{ item.revenue | number:'1.0-0' }}đ ({{ item.percentage }}%)</span>
+                      </div>
+                      <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" [style.width.%]="item.percentage"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- RIGHT: NHẬN ĐỊNH TỪ AI -->
+              <div class="detail-panel panel-reasoning">
+                <div class="panel-title">
+                  <span class="bulb-icon">💡</span> Nhận định từ AI
+                </div>
+                <div class="panel-body">
+                  <div *ngIf="!hasAnalyzedData()" class="empty-placeholder">
+                    <div class="placeholder-desc">AI sẽ tạo bài phân tích đánh giá chi tiết dựa trên dữ liệu của bạn
+                    </div>
+                  </div>
+
+                  <div *ngIf="hasAnalyzedData()" class="live-reasoning-text">
+                    {{ geminiReasoningText() }}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+
+        <!-- SECTION 3: KẾ HOẠCH TÁI CẤU TRÚC (RESTRUCTURE SECTION) -->
+        <section class="dashboard-card restructure-section">
+          <div class="card-header-bar">
+            <div class="header-title-box">
+              <span class="card-num-badge">3</span>
+              <div>
+                <div class="card-main-title">KẾ HOẠCH TÁI CẤU TRÚC</div>
+                <div class="card-sub-description">Đề xuất sắp xếp danh mục và sản phẩm từ dữ liệu thực tế</div>
+              </div>
+            </div>
+            <div class="status-pill-badge" [class.analyzed]="hasAnalyzedData() && restructurePlan() !== null">
+              <span class="status-dot"></span>
+              <span>{{ (hasAnalyzedData() && restructurePlan() !== null) ? 'Sẵn sàng' : 'Chưa có dữ liệu' }}</span>
+            </div>
+          </div>
+
+          <div class="card-body">
+
+            <!-- EMPTY STATE -->
+            <div *ngIf="!hasAnalyzedData() || restructurePlan() === null" class="plan-empty-state">
+              <p>Kế hoạch tái cấu trúc thực đơn sẽ hiển thị tại đây sau khi hoàn tất phân tích dữ liệu kinh doanh.</p>
+            </div>
+
+            <!-- CONTENT KHI ĐÃ CÓ DỮ LIỆU -->
+            <ng-container *ngIf="hasAnalyzedData() && restructurePlan() as plan">
+
+              <!-- ROW 1: MÓN CHỦ LỰC | HERO DISH -->
+              <div class="plan-row plan-row-1">
+
+                <!-- MÓN CHỦ LỰC -->
+                <div class="plan-subcard card-core">
+                  <div class="subcard-title">👑 Món chủ lực</div>
+                  <div class="chip-list">
+                    <div class="product-chip" *ngFor="let product of plan.coreDishes">
+                      <span class="chip-icon">🔥</span>
+                      <span>{{ getProductName(product) }}</span>
+                    </div>
+                    <div *ngIf="!plan.coreDishes || plan.coreDishes.length === 0" class="empty-subtext">Chưa xác định
+                    </div>
+                  </div>
+                </div>
+
+                <!-- HERO DISH -->
+                <div class="plan-subcard card-hero">
+                  <div class="subcard-title">⭐ Hero Dish</div>
+                  <div class="hero-items-flex">
+                    <div class="hero-item-box" *ngFor="let product of plan.heroDishes; let i = index">
+                      <span class="hero-badge">#{{ i + 1 }}</span>
+                      <div class="hero-info">
+                        <span class="hero-name">{{ getProductName(product) }}</span>
+                        <span class="hero-sub">Ưu tiên vị trí nổi bật</span>
+                      </div>
+                    </div>
+                    <div *ngIf="!plan.heroDishes || plan.heroDishes.length === 0" class="empty-subtext">Chưa xác định
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- ROW 2: SẢN PHẨM ƯU TIÊN CỤ THỂ (FULL WIDTH) -->
+              <div class="plan-row plan-row-2">
+                <div class="plan-subcard card-priority-full">
+                  <div class="subcard-title">🎯 Sản phẩm ưu tiên cụ thể</div>
+                  <div class="priority-products-grid">
+                    <div class="priority-product-item" *ngFor="let p of getPriorityProductsList()">
+                      <div class="p-item-header">
+                        <span class="p-name">{{ p.productName }}</span>
+                        <span class="p-badge" [class.badge-hero]="p.priorityType === 'HERO'">{{ p.priorityType }}</span>
+                      </div>
+                      <div class="p-category">{{ p.category }}</div>
+                      <div class="p-reason">{{ p.reason }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ROW 3: THỨ TỰ NHÓM MÓN | MÓN GIẢM ƯU TIÊN | COMBO -->
+              <div class="plan-row plan-row-3">
+
+                <!-- THỨ TỰ NHÓM MÓN -->
+                <div class="plan-subcard card-category-order">
+                  <div class="subcard-title">📊 Thứ tự nhóm món</div>
+                  <div class="ranking-list">
+                    <div class="ranking-item" *ngFor="let cat of plan.categoryOrder; let i = index">
+                      <span class="ranking-num">{{ i + 1 }}</span>
+                      <span class="ranking-name">{{ cat }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- MÓN GIẢM ƯU TIÊN -->
+                <div class="plan-subcard card-reduced">
+                  <div class="subcard-title">↓ Món giảm ưu tiên</div>
+                  <div class="reduced-list">
+                    <div class="reduced-item" *ngFor="let product of plan.reducedPriorityItems">
+                      <span class="reduced-icon">↓</span>
+                      <span>{{ getProductName(product) }}</span>
+                    </div>
+                    <div *ngIf="!plan.reducedPriorityItems || plan.reducedPriorityItems.length === 0"
+                      class="empty-subtext">Chưa có món</div>
+                  </div>
+                </div>
+
+                <!-- ƯU ĐÃI & GIẢM GIÁ KÍCH CẦU -->
+                <div class="plan-subcard card-combo">
+                  <div class="subcard-title">🎁 Ưu đãi & Giảm giá kích cầu</div>
+                  <div class="combo-list">
+                    <ng-container *ngIf="plan.structuredCombos && plan.structuredCombos.length > 0">
+                      <div class="combo-item" *ngFor="let combo of plan.structuredCombos">
+                        <div class="combo-pair">
+                          <span>{{ combo.mainProductName }}</span>
+                          <strong class="plus">+</strong>
+                          <span>{{ combo.pairedProductName }}</span>
+                        </div>
+                        <div *ngIf="combo.comboName" class="combo-name">{{ combo.comboName }}</div>
+                      </div>
+                    </ng-container>
+                    <ng-container
+                      *ngIf="(!plan.structuredCombos || plan.structuredCombos.length === 0) && plan.comboPlacements">
+                      <div class="combo-item" *ngFor="let combo of plan.comboPlacements">
+                        <span>{{ getProductName(combo) }}</span>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- ROW 4: BỐ CỤC ĐỀ XUẤT (FULL WIDTH) -->
+              <div class="plan-row plan-row-4">
+                <div class="plan-subcard card-layout-proposed">
+                  <div class="subcard-title">▣ Bố cục đề xuất</div>
+                  <div class="layout-zones-grid">
+                    <div class="zone-box">
+                      <div class="zone-tag">Vùng 1 (Đầu menu)</div>
+                      <p>{{ getLayoutTopZone() }}</p>
+                    </div>
+                    <div class="zone-box">
+                      <div class="zone-tag">Vùng 2 (Trung tâm)</div>
+                      <p>{{ getLayoutCenterZone() }}</p>
+                    </div>
+                    <div class="zone-box">
+                      <div class="zone-tag">Vùng 3 (Khu vực phụ)</div>
+                      <p>{{ getLayoutSecondaryZone() }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </ng-container>
+
+          </div>
+        </section>
+
+      </div>
+
+      <!-- RIGHT COLUMN (~38% WIDTH / 1fr, min 520px) -->
+      <div class="service-right">
+
+        <!-- SECTION 4: CHỌN PHONG CÁCH MENU AI (VISUAL STYLE) -->
+        <section class="dashboard-card template-section">
+          <div class="card-header-bar">
+            <div class="header-title-box">
+              <span class="card-num-badge">4</span>
+              <div class="card-main-title">CHỌN PHONG CÁCH MENU AI (VISUAL STYLE)</div>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="template-buttons-grid">
+              <button *ngFor="let tmpl of coffeeTemplatesList" class="btn-template-option"
+                [class.active]="selectedStyleId() === tmpl.templateId"
+                [class.is-plus]="tmpl.isPlusOnly"
+                (click)="onSelectStyle(tmpl.templateId)"
+                [title]="tmpl.description">
+                <span class="style-dot" [style.background-color]="tmpl.primaryColor"></span>
+                <span class="tmpl-label">[ {{ tmpl.badgeText }} ]</span>
+                <span *ngIf="tmpl.isPlusOnly" class="tmpl-plan-tag plus-tag">👑 PLUS</span>
+                <span *ngIf="!tmpl.isPlusOnly" class="tmpl-plan-tag free-tag">FREE</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 5: SO SÁNH MENU TRƯỚC VÀ SAU (MAIN FOCUS OF RIGHT COLUMN) -->
+        <section class="dashboard-card compare-section">
+          <div class="card-header-bar">
+            <div class="header-title-box">
+              <span class="card-num-badge">5</span>
+              <div>
+                <div class="card-main-title">SO SÁNH MENU TRƯỚC VÀ SAU</div>
+                <div class="card-sub-description">Menu cũ (Gốc) vs Menu mới (AI Artwork)</div>
+              </div>
+            </div>
+            <button *ngIf="hasAnalyzedData()" (click)="openNewMenuModal()" class="btn-fullscreen-preview"
+              title="Xem full màn hình">
+              🔍 Xem toàn màn hình
+            </button>
+          </div>
+
+          <div class="card-body">
+            <div class="menu-comparison-grid">
+
+              <!-- OLD MENU PREVIEW -->
+              <div class="compare-side side-old">
+                <div class="side-title">
+                  <span class="side-tag">Menu cũ</span>
+                  <button *ngIf="oldMenuPreviewUrl()" (click)="openOldMenuModal()" class="btn-small-zoom">🔍</button>
+                </div>
+                <div class="menu-preview-frame">
+                  <img *ngIf="oldMenuPreviewUrl()" [src]="oldMenuPreviewUrl()" alt="Old Menu Preview"
+                    class="old-menu-img" />
+                  <div *ngIf="!oldMenuPreviewUrl()" class="preview-empty">
+                    <span class="empty-icon">📷</span>
+                    <p>Chưa có file menu cũ</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- DIVIDER ARROW -->
+              <div class="compare-divider">
+                <div class="arrow-circle">➔</div>
+              </div>
+
+              <!-- NEW MENU PREVIEW (RENDERED) -->
+              <div class="compare-side side-new">
+                <div class="side-title">
+                  <span class="side-tag tag-new">Menu mới</span>
+                  <span class="style-badge">{{ selectedStyleId() }}</span>
+                </div>
+                <div class="menu-preview-frame">
+                  <app-visual-menu-renderer *ngIf="hasAnalyzedData()" [blueprint]="menuBlueprint()"
+                    [styleId]="selectedStyleId()" [currentSessionId]="sessionId()">
+                  </app-visual-menu-renderer>
+
+                  <div *ngIf="!hasAnalyzedData()" class="preview-empty">
+                    <span class="empty-icon">📷</span>
+                    <p>Kết quả sẽ xuất hiện sau khi phân tích</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 6: XUẤT MENU (COMPACT) -->
+        <section class="dashboard-card export-section">
+          <div class="card-header-bar">
+            <div class="header-title-box">
+              <span class="card-num-badge">6</span>
+              <div class="card-main-title">XUẤT MENU</div>
+            </div>
+            <div class="status-pill-badge" [class.analyzed]="hasAnalyzedData()">
+              <span class="status-dot"></span>
+              <span>{{ hasAnalyzedData() ? 'Sẵn sàng' : 'Chưa sẵn sàng' }}</span>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="export-formats-grid">
+
+              <!-- PNG -->
+              <div class="format-card" [class.selected]="selectedExportFormat() === 'png'"
+                (click)="selectExportFormat('png')">
+                <div class="fmt-title">PNG</div>
+                <div class="fmt-sub">Chất lượng cao</div>
+              </div>
+
+              <!-- JPG -->
+              <div class="format-card" [class.selected]="selectedExportFormat() === 'jpg'"
+                (click)="selectExportFormat('jpg')">
+                <div class="fmt-title">JPG</div>
+                <div class="fmt-sub">Web tối ưu</div>
+              </div>
+
+              <!-- PDF -->
+              <div class="format-card" [class.selected]="selectedExportFormat() === 'pdf'"
+                (click)="selectExportFormat('pdf')">
+                <div class="fmt-title">PDF</div>
+                <div class="fmt-sub">File in ấn</div>
+              </div>
+
+            </div>
+
+            <button (click)="exportMenuFile()" class="btn-export-action" [disabled]="!hasAnalyzedData()">
+              ↓ XUẤT HÌNH ẢNH MENU
+            </button>
+          </div>
+        </section>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- MODAL ZOOM POPUP (FULLSCREEN PREVIEW) -->
+  <div *ngIf="isModalOpen()" class="modal-zoom-overlay" (click)="closeModal()">
+    <div class="modal-zoom-content" (click)="$event.stopPropagation()">
+      <div class="modal-header-bar">
+        <h3>{{ modalTitle() }}</h3>
+        <button class="modal-close-btn" (click)="closeModal()">✕</button>
+      </div>
+      <div class="modal-body-render">
+        <img *ngIf="modalType() === 'OLD_MENU'" [src]="oldMenuPreviewUrl()" alt="Old Menu Full"
+          class="modal-full-img" />
+        <div *ngIf="modalType() === 'NEW_MENU'" class="modal-renderer-wrapper">
+          <app-visual-menu-renderer [blueprint]="menuBlueprint()" [styleId]="selectedStyleId()"
+            [currentSessionId]="sessionId()"></app-visual-menu-renderer>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL THANH TOÁN QR CODE -->
+  <div *ngIf="isPaymentModalOpen()" class="payment-modal-overlay" (click)="closePaymentModal()">
+    <div class="payment-modal-card" (click)="$event.stopPropagation()">
+      
+      <!-- Modal Header -->
+      <div class="payment-modal-header">
+        <div class="header-left">
+          <div class="payment-icon-badge">👑</div>
+          <div>
+            <h3 class="payment-title">{{ paymentModalTitle() }}</h3>
+            <p class="payment-subtitle">{{ paymentModalSubtitle() }}</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" (click)="closePaymentModal()" title="Đóng">✕</button>
+      </div>
+
+      <!-- Loading khi đang tạo mã -->
+      <div *ngIf="isCreatingPayment()" class="payment-loading-state">
+        <div class="spinner"></div>
+        <p>Đang khởi tạo mã giao dịch và kết nối cổng thanh toán...</p>
+      </div>
+
+      <!-- Nội dung thanh toán chi tiết -->
+      <div *ngIf="!isCreatingPayment() && paymentData()" class="payment-modal-body">
+        
+        <div class="payment-notice-banner">
+          <span class="notice-icon">💎</span>
+          <span>{{ paymentNoticeText() }}</span>
+        </div>
+
+        <div class="payment-grid-layout">
+          <!-- Cột hiển thị Mã QR -->
+          <div class="payment-qr-col">
+            <div class="qr-wrapper">
+              <img [src]="(paymentData()?.qrImageUrl || 'images/payment_qr.png') + '?v=' + qrVersion" 
+                   alt="QR Thanh toán VietQR Napas 247" 
+                   class="qr-image" />
+              <div class="qr-scan-guide">
+                <span class="scan-icon">📱</span> Quét bằng ứng dụng Ngân hàng hoặc Ví điện tử (MoMo)
+              </div>
+            </div>
+          </div>
+
+          <!-- Cột chi tiết thông tin chuyển khoản -->
+          <div class="payment-info-col">
+            <div class="info-row">
+              <span class="info-label">Số tiền cần thanh toán</span>
+              <span class="info-value amount-highlight">
+                {{ (paymentData()?.amount || 50000) | number:'1.0-0' }} VNĐ
+              </span>
+            </div>
+
+            <div class="info-row">
+              <span class="info-label">Kênh thanh toán</span>
+              <span class="info-value">VietQR / Napas 247</span>
+            </div>
+
+            <div class="info-row">
+              <span class="info-label">Ứng dụng hỗ trợ</span>
+              <span class="info-value">Tất cả App Ngân hàng & Ví MoMo</span>
+            </div>
+
+            <div class="info-row">
+              <span class="info-label">Người thụ hưởng</span>
+              <span class="info-value font-semibold">Tài khoản HA (Tự động nhận diện)</span>
+            </div>
+
+            <!-- Mã chuyển khoản / Nội dung CK -->
+            <div class="info-box-memo">
+              <div class="memo-header">
+                <span class="memo-title">NỘI DUNG CHUYỂN KHOẢN (BẮT BUỘC)</span>
+                <span class="memo-warn">Giữ nguyên để hệ thống tự động duyệt</span>
+              </div>
+              <div class="memo-code-row">
+                <span class="memo-code">{{ paymentData()?.transactionCode }}</span>
+                <button type="button" class="btn-copy-memo" (click)="copyTransactionCode()">
+                  <span *ngIf="!codeCopied()">📋 Sao chép</span>
+                  <span *ngIf="codeCopied()" class="copied-text">✓ Đã chép</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Trạng thái lắng nghe giao dịch -->
+            <div class="payment-status-box" [class.success]="paymentStatus() === 'SUCCESS'">
+              <div *ngIf="paymentStatus() === 'PENDING'" class="status-pending">
+                <div class="mini-pulsing-dot"></div>
+                <span>Hệ thống đang tự động lắng nghe giao dịch chuyển khoản...</span>
+              </div>
+              <div *ngIf="paymentStatus() === 'SUCCESS'" class="status-success">
+                <span>🎉 ĐÃ NHẬN THANH TOÁN! Đang bắt đầu thiết kế menu...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer Action Buttons -->
+      <div *ngIf="!isCreatingPayment() && paymentData()" class="payment-modal-footer">
+        <button type="button" class="btn-cancel-pay" (click)="closePaymentModal()">
+          Đóng
+        </button>
+
+        <div class="footer-action-right">
+          <!-- Nút Kiểm tra giao dịch thực tế -->
+          <button type="button" class="btn-check-manual" (click)="verifyPaymentManually()" [disabled]="isCheckingPayment()">
+            <span *ngIf="!isCheckingPayment()">🔄 Tôi đã chuyển khoản thành công</span>
+            <span *ngIf="isCheckingPayment()">Đang đối soát giao dịch...</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div *ngIf="showToast()" class="toast-floating-popup">
+    <span class="toast-symbol">💡</span>
+    <span>{{ toastMessage() }}</span>
+  </div>
+
+</div>

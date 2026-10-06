@@ -1,0 +1,294 @@
+.luxury-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 3px solid var(--border-gold-muted);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  transition: var(--transition-smooth);
+
+  .header-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+/* Logo Area */
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--color-text-primary);
+
+  .coffee-cup-sticker {
+    display: inline-block;
+    transition: var(--transition-smooth);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+  }
+
+  .logo-subtext {
+    font-family: var(--font-primary);
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--color-gold);
+    letter-spacing: 4px;
+    border: 3px solid var(--border-gold-muted);
+    padding: 2px 6px;
+    margin-left: 5px;
+    border-radius: 2px;
+  }
+
+  &:hover {
+    .coffee-cup-sticker {
+      transform: translateY(-2px) rotate(-6deg) scale(1.1);
+      filter: drop-shadow(0 4px 10px rgba(242, 101, 34, 0.45));
+    }
+  }
+}
+
+/* Navigation Menu */
+.nav-menu {
+  ul {
+    display: flex;
+    gap: 40px;
+  }
+
+  .nav-link {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    position: relative;
+    padding: 8px 0;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 1px;
+      background-color: var(--color-gold);
+      transition: var(--transition-smooth);
+      transform: translateX(-50%);
+    }
+
+    &:hover,
+    &.active {
+      color: var(--color-gold);
+
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+}
+
+/* Actions Area */
+.actions-area {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  .btn-login {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-text-primary);
+    padding: 10px 24px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+
+    &:hover {
+      color: var(--color-gold);
+      border-color: var(--border-gold-muted);
+      background-color: rgba(242, 101, 34, 0.05);
+    }
+  }
+
+  .btn-register {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #ffffff;
+    background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-bright) 100%);
+    padding: 12px 28px;
+    border-radius: 4px;
+    box-shadow: var(--shadow-gold);
+
+    &:hover {
+      background: linear-gradient(135deg, var(--color-gold-bright) 0%, var(--color-gold) 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(242, 101, 34, 0.3);
+    }
+  }
+}
+
+/* User Profile Wrapper & Dropdown */
+.user-profile-wrapper {
+  position: relative;
+
+  .profile-trigger {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 16px;
+    border-radius: 30px;
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--border-white-muted);
+    color: var(--color-text-primary);
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--color-gold);
+    }
+
+    .username {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .arrow-icon {
+      font-size: 10px;
+      color: var(--color-text-secondary);
+      transition: var(--transition-fast);
+
+      &.rotated {
+        transform: rotate(180deg);
+      }
+    }
+
+    &:hover {
+      border-color: var(--color-gold);
+      background: rgba(242, 101, 34, 0.05);
+    }
+  }
+
+  /* Luxury Dropdown */
+  .luxury-dropdown {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 260px;
+    background: #ffffff;
+    border: 1px solid var(--border-gold-muted);
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    animation: fadeInDropdown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+    .dropdown-header {
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.01);
+      border-bottom: 1px solid var(--border-white-muted);
+
+      .user-name-full {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--color-text-primary);
+      }
+
+      .user-email {
+        font-size: 12px;
+        color: var(--color-text-secondary);
+        margin-top: 2px;
+      }
+    }
+
+    .dropdown-links {
+      padding: 10px 0;
+
+      li {
+
+        a,
+        .btn-logout {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 12px 20px;
+          font-size: 14px;
+          color: var(--color-text-secondary);
+          width: 100%;
+          text-align: left;
+          font-weight: 400;
+
+          .link-icon {
+            font-size: 16px;
+            color: var(--color-gold);
+          }
+
+          &:hover {
+            color: var(--color-text-primary);
+            background: rgba(242, 101, 34, 0.06);
+          }
+        }
+
+        .btn-logout {
+          border-top: none;
+          color: #ff6b6b;
+
+          .link-icon {
+            color: #ff6b6b;
+          }
+
+          &:hover {
+            background: rgba(255, 107, 107, 0.08);
+          }
+        }
+      }
+
+      .divider {
+        height: 1px;
+        background: var(--border-white-muted);
+        margin: 8px 0;
+      }
+    }
+  }
+}
+
+@keyframes fadeInDropdown {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Header */
+@media (max-width: 992px) {
+  .luxury-header {
+    .header-container {
+      padding: 0 24px;
+    }
+
+    .nav-menu {
+      display: none;
+      /* In practical app, we would build a drawer menu, but for now we simplify */
+    }
+  }
+}

@@ -1,0 +1,189 @@
+<div class="auth-page-wrapper">
+  <div class="auth-split-container">
+    <!-- Cột Trái (55%): Form Đăng Ký Glassmorphism -->
+    <div class="auth-form-column">
+      <div class="auth-card-box">
+        <!-- Logo quay về trang chủ -->
+        <a routerLink="/" class="auth-logo-link">
+          <span class="logo-text">SMART <span class="logo-subtext">MENU</span></span>
+        </a>
+
+        <!-- Tiêu đề chuẩn SEO -->
+        <header class="auth-form-header">
+          <h1 class="seo-auth-title">Đăng Ký Tài Khoản</h1>
+          <p class="auth-sub-desc">Khởi tạo thực đơn AI tối ưu lợi nhuận miễn phí ngay hôm nay</p>
+        </header>
+
+        <!-- Form đăng ký -->
+        <form (ngSubmit)="onRegister()" #registerForm="ngForm" class="auth-fields-form">
+          <!-- Nhóm Họ Tên -->
+          <div class="form-input-group">
+            <label for="regFullName">Họ và tên của bạn <span class="required-mark">*</span></label>
+            <div class="input-icon-wrapper">
+              <span class="input-icon">👤</span>
+              <input 
+                type="text" 
+                id="regFullName" 
+                name="fullName"
+                placeholder="Ví dụ: Nguyễn Văn A"
+                [ngModel]="fullName()"
+                (ngModelChange)="fullName.set($event)"
+                required
+                class="glow-style-input"
+              />
+            </div>
+          </div>
+
+          <!-- Nhóm Email -->
+          <div class="form-input-group">
+            <label for="regEmail">Địa chỉ Email <span class="required-mark">*</span></label>
+            <div class="input-icon-wrapper">
+              <span class="input-icon">✉</span>
+              <input 
+                type="email" 
+                id="regEmail" 
+                name="email"
+                placeholder="email@example.com"
+                [ngModel]="email()"
+                (ngModelChange)="email.set($event)"
+                required
+                class="glow-style-input"
+              />
+            </div>
+          </div>
+
+          <!-- Nhóm Mật Khẩu -->
+          <div class="form-input-group">
+            <label for="regPassword">Mật khẩu <span class="required-mark">*</span></label>
+            <div class="input-icon-wrapper">
+              <span class="input-icon">🔒</span>
+              <input 
+                [type]="showPassword() ? 'text' : 'password'" 
+                id="regPassword" 
+                name="password"
+                placeholder="Tối thiểu 6 ký tự"
+                [ngModel]="password()"
+                (ngModelChange)="password.set($event)"
+                required
+                class="glow-style-input password-input-field"
+              />
+              <button 
+                type="button" 
+                (click)="togglePasswordVisibility()" 
+                class="btn-toggle-password"
+              >
+                <span class="eye-symbol">{{ showPassword() ? '👁️' : '🙈' }}</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Nhóm Xác Nhận Mật Khẩu -->
+          <div class="form-input-group">
+            <label for="regConfirmPassword">Xác nhận mật khẩu <span class="required-mark">*</span></label>
+            <div class="input-icon-wrapper">
+              <span class="input-icon">🛡️</span>
+              <input 
+                [type]="showConfirmPassword() ? 'text' : 'password'" 
+                id="regConfirmPassword" 
+                name="confirmPassword"
+                placeholder="Nhập lại mật khẩu"
+                [ngModel]="confirmPassword()"
+                (ngModelChange)="confirmPassword.set($event)"
+                required
+                class="glow-style-input password-input-field"
+              />
+              <button 
+                type="button" 
+                (click)="toggleConfirmPasswordVisibility()" 
+                class="btn-toggle-password"
+              >
+                <span class="eye-symbol">{{ showConfirmPassword() ? '👁️' : '🙈' }}</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Checkbox Điều khoản dịch vụ -->
+          <div class="form-checkbox-row">
+            <label class="custom-checkbox-container">
+              <input 
+                type="checkbox" 
+                name="agreeTerms"
+                [ngModel]="agreeTerms()"
+                (ngModelChange)="agreeTerms.set($event)"
+                required
+              />
+              <span class="checkmark-box"></span>
+              Tôi đồng ý với <a href="#" (click)="$event.preventDefault(); triggerToast('Chính sách Điều khoản đang được cập nhật!', 'error')" class="inner-terms-link">Điều khoản dịch vụ</a> và <a href="#" (click)="$event.preventDefault(); triggerToast('Chính sách bảo mật đang được cập nhật!', 'error')" class="inner-terms-link">Chính sách bảo mật</a>.
+            </label>
+          </div>
+
+          <!-- Nút Đăng Ký -->
+          <button type="submit" class="btn-submit-orange-glow">
+            Đăng Ký Tài Khoản <span class="flash-symbol">✦</span>
+          </button>
+        </form>
+
+        <!-- Divider line -->
+        <div class="auth-divider-box">
+          <span class="divider-line"></span>
+          <span class="divider-text">hoặc đăng ký nhanh bằng</span>
+          <span class="divider-line"></span>
+        </div>
+
+        <!-- Các nút liên kết bên ngoài (Google, Facebook) -->
+        <div class="auth-third-party-row">
+          <button type="button" (click)="triggerToast('Liên kết Google đang được cập nhật!', 'error')" class="btn-third-party btn-google-color">
+            <svg class="svg-social" viewBox="0 0 24 24" width="16" height="16">
+              <path fill="#EA4335" d="M12 5.04c1.67 0 3.19.57 4.38 1.69l3.27-3.27C17.67 1.55 15.01 1 12 1 7.28 1 3.32 3.74 1.34 7.74l3.85 2.99c.96-2.91 3.66-4.69 6.81-4.69z"/>
+              <path fill="#4285F4" d="M23.49 12.27c0-.81-.07-1.59-.2-2.36H12v4.51h6.46c-.29 1.48-1.14 2.73-2.4 3.58l3.73 2.9c2.18-2.01 3.7-4.99 3.7-8.63z"/>
+              <path fill="#FBBC05" d="M5.19 14.25c-.24-.73-.38-1.5-.38-2.3s.14-1.57.38-2.3L1.34 6.66C.49 8.27 0 10.08 0 12s.49 3.73 1.34 5.34l3.85-3.09z"/>
+              <path fill="#34A853" d="M12 23c3.24 0 5.97-1.07 7.96-2.91l-3.73-2.9c-1.12.75-2.55 1.2-4.23 1.2-3.15 0-5.85-1.78-6.81-4.69L1.34 16.7C3.32 20.7 7.28 23 12 23z"/>
+            </svg>
+            Google
+          </button>
+          <button type="button" (click)="triggerToast('Liên kết Facebook đang được cập nhật!', 'error')" class="btn-third-party btn-facebook-color">
+            <svg class="svg-social" viewBox="0 0 24 24" width="16" height="16" fill="#1877F2">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+            Facebook
+          </button>
+        </div>
+
+        <!-- Footer của form chuyển đổi sang Đăng nhập -->
+        <footer class="auth-form-footer">
+          <p class="switch-auth-text">Đã có tài khoản? <a routerLink="/login" class="switch-auth-link">Đăng nhập ngay</a></p>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Cột Phải (45%): Banner Quảng Bá Thương Hiệu AURA/SMART MENU -->
+    <div class="auth-banner-column">
+      <div class="auth-banner-overlay-glow"></div>
+      <div class="auth-banner-content-box">
+        <span class="decor-sparkle">✦ ✦ ✦</span>
+        <h2 class="banner-main-slogan">Tạo Tài Khoản Khởi Đầu Thành Công Vượt Trội</h2>
+        <p class="banner-sub-slogan">Đăng ký hoàn tất trong 30 giây và tiếp cận ngay bộ máy AI phân tích dữ liệu bán hàng, thiết kế menu tối ưu độc quyền.</p>
+        
+        <!-- Điểm nhấn thống kê nhỏ -->
+        <div class="banner-stats-box">
+          <div class="stat-item-badge">
+            <span class="stat-number">10,000+</span>
+            <span class="stat-label">Nhà hàng tin dùng</span>
+          </div>
+          <div class="stat-item-badge">
+            <span class="stat-number">Miễn Phí</span>
+            <span class="stat-label">Không cần thẻ tín dụng</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Custom Toast Notification -->
+<div *ngIf="showToast()" class="custom-toast-alert" [class.alert-active-status]="showToast()" [class.toast-error]="toastType() === 'error'">
+  <div class="toast-content-wrapper">
+    <span class="toast-success-spark">{{ toastType() === 'success' ? '✔' : '✖' }}</span>
+    <span class="toast-text-msg">{{ toastMessage() }}</span>
+  </div>
+</div>

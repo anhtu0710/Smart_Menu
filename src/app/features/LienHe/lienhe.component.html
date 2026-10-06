@@ -1,0 +1,135 @@
+<div class="features-page-wrapper">
+  <div class="container">
+    <!-- 1. Header Trang Liên Hệ chuẩn SEO -->
+    <header class="contact-header-section">
+      <h1 class="seo-main-title">Liên Hệ SMART MENU - Thiết Kế Thực Đơn AI Triệu Đô</h1>
+      <p class="contact-sub-intro">
+        Chúng tôi luôn sẵn sàng hỗ trợ bạn nâng tầm thương hiệu và tối ưu doanh thu nhà hàng. Gửi lời nhắn cho chuyên
+        viên thiết kế AI ngay hôm nay.
+      </p>
+    </header>
+
+    <!-- 2. Bố cục 2 cột chính -->
+    <div class="contact-main-grid">
+      <!-- Cột Trái: Form gửi lời nhắn (Dark Glassmorphism Card) -->
+      <section class="contact-card-box form-column-card">
+        <div class="card-title-header">
+          <span class="icon-tag-glow">✉</span>
+          <h2>Gửi Lời Nhắn Cho Chúng Tôi</h2>
+        </div>
+
+        <form (ngSubmit)="onSubmitContact()" #contactForm="ngForm" class="contact-form-layout">
+          <!-- Nhóm Họ Tên -->
+          <div class="form-input-group">
+            <label for="contactFullName">Họ và tên của bạn <span class="required-mark">*</span></label>
+            <input type="text" id="contactFullName" name="fullName" placeholder="Ví dụ: Nguyễn Văn A"
+              [ngModel]="fullName()" (ngModelChange)="fullName.set($event)" required class="glow-style-input" />
+          </div>
+
+          <!-- Nhóm Email & Số Điện Thoại (2 cột trên Desktop) -->
+          <div class="form-double-row">
+            <div class="form-input-group">
+              <label for="contactEmail">Địa chỉ Email <span class="required-mark">*</span></label>
+              <input type="email" id="contactEmail" name="email" placeholder="email@example.com" [ngModel]="email()"
+                (ngModelChange)="email.set($event)" required class="glow-style-input" />
+            </div>
+
+            <div class="form-input-group">
+              <label for="contactPhone">Số điện thoại</label>
+              <input type="tel" id="contactPhone" name="phone" placeholder="Ví dụ: 0901234567" [ngModel]="phone()"
+                (ngModelChange)="phone.set($event)" class="glow-style-input" />
+            </div>
+          </div>
+
+          <!-- Nhóm Chủ Đề -->
+          <div class="form-input-group">
+            <label for="contactSubject">Bạn đang quan tâm đến</label>
+            <select id="contactSubject" name="subject" [ngModel]="subject()" (ngModelChange)="subject.set($event)"
+              class="glow-style-input select-styled">
+              <option value="Tư vấn thiết kế Menu">Tư vấn thiết kế Menu bằng AI</option>
+              <option value="Hợp tác kinh doanh">Hợp tác kinh doanh đối tác</option>
+              <option value="Báo lỗi kỹ thuật">Góp ý / Báo lỗi kỹ thuật</option>
+              <option value="Yêu cầu khác">Yêu cầu tư vấn khác</option>
+            </select>
+          </div>
+
+          <!-- Nhóm Lời Nhắn -->
+          <div class="form-input-group">
+            <label for="contactMessage">Lời nhắn chi tiết <span class="required-mark">*</span></label>
+            <textarea id="contactMessage" name="message" rows="5"
+              placeholder="Hãy cho chúng tôi biết nhu cầu của bạn..." [ngModel]="message()"
+              (ngModelChange)="message.set($event)" required class="glow-style-input textarea-styled"></textarea>
+          </div>
+
+          <!-- Nút gửi form -->
+          <div class="form-action-btn-box">
+            <button type="submit" class="btn-send-contact-glow">
+              <span class="btn-icon-flash">✦</span> Gửi Lời Nhắn Ngay
+            </button>
+            <p class="form-submit-note">Phản hồi cam kết trong vòng 15 phút qua Email/Hotline</p>
+          </div>
+        </form>
+      </section>
+
+      <!-- Cột Phải: Thông tin liên lạc & Google Maps (Dark Glassmorphism Card) -->
+      <section class="contact-card-box info-map-column-card">
+        <div class="card-title-header">
+          <span class="icon-tag-glow">🏢</span>
+          <h2>Thông Tin Văn Phòng & Bản Đồ</h2>
+        </div>
+
+        <!-- Các thông tin địa chỉ -->
+        <address class="contact-address-block">
+          <div class="contact-info-item">
+            <span class="info-icon">📍</span>
+            <div class="info-text-wrapper">
+              <h3>Trụ sở chính:</h3>
+              <p>Tòa nhà Delta, Đại Học FPT,Hà Nội</p>
+            </div>
+          </div>
+
+          <div class="contact-info-item">
+            <span class="info-icon">📞</span>
+            <div class="info-text-wrapper">
+              <h3>Hotline tư vấn:</h3>
+              <p><a href="tel:19008888" class="contact-link-item">1900 8888</a> (Mở cửa 24/7)</p>
+            </div>
+          </div>
+
+          <div class="contact-info-item">
+            <span class="info-icon">✉</span>
+            <div class="info-text-wrapper">
+              <h3>Email hỗ trợ khách hàng:</h3>
+              <p><a href="mailto:support@smartmenu.vn" class="contact-link-item">support@smartmenu.vn</a></p>
+            </div>
+          </div>
+
+          <div class="contact-info-item">
+            <span class="info-icon">🕒</span>
+            <div class="info-text-wrapper">
+              <h3>Giờ làm việc:</h3>
+              <p>Thứ 2 - Thứ 6: 08:00 - 18:00 | Thứ 7 - Chủ Nhật: 09:00 - 16:00 (Hỗ trợ AI 24/7)</p>
+            </div>
+          </div>
+        </address>
+
+        <!-- Bản đồ Google Maps nhúng chất lượng cao -->
+        <div class="google-maps-wrapper-box">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.1251203673323!2d106.71960247590518!3d10.797893158728445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317527c4fa6164f9%3A0x6bda19a930728c3a!2zVMOyYSBuaMOgIExhbmRtYXJrIDgx!5e0!3m2!1svi!2svn!4v1700000000000!5m2!1svi!2svn"
+            width="100%" height="260" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade" class="google-map-iframe"
+            title="Bản đồ chỉ đường đến văn phòng SMART MENU tại Landmark 81"></iframe>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Custom Toast Notification -->
+<div *ngIf="showToast()" class="custom-toast-alert alert-active-status">
+  <div class="toast-content-wrapper">
+    <span class="toast-success-spark">✔</span>
+    <span class="toast-text-msg">{{ toastMessage() }}</span>
+  </div>
+</div>
