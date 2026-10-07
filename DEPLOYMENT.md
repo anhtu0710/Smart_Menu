@@ -27,6 +27,19 @@ Sau khi stack chạy, thực hiện:
 
 Script kiểm tra đăng ký, đăng nhập, phân quyền, upload hai file, phân tích, đọc lại kết quả, blueprint và tạo menu phong cách miễn phí.
 
+## Public URL miễn phí để kiểm thử
+
+Khi chỉ cần kiểm thử từ Internet trong lúc máy đang bật, bật Cloudflare Quick Tunnel ngay trong Docker:
+
+```powershell
+docker compose -f docker-compose.prod.yml --profile quick-tunnel up -d
+docker compose -f docker-compose.prod.yml logs quick-tunnel
+```
+
+Lấy URL `https://...trycloudflare.com` trong log và mở URL đó trên điện thoại hoặc mạng khác. Chạy kiểm thử qua URL public bằng cách thêm `-ApiUrl 'https://...trycloudflare.com/api/v1'` vào `scripts/test-api.ps1`.
+
+Quick Tunnel không cần tài khoản Cloudflare nhưng URL sẽ đổi sau khi container/tunnel khởi động lại, không có cam kết uptime và bất kỳ ai biết URL đều có thể truy cập. Chỉ dùng cho dữ liệu test; khi cần hostname ổn định hoặc dùng thật, tạo Cloudflare Tunnel có tài khoản/domain theo phần production bên dưới.
+
 ## Đưa lên production
 
 1. Trên máy chủ, clone repository và tạo `.env` từ `.env.example` với giá trị production.

@@ -66,5 +66,14 @@ services:
       - "${APP_PORT:-8080}:80"
     restart: unless-stopped
 
+  quick-tunnel:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate --url http://frontend:80
+    depends_on:
+      frontend:
+        condition: service_started
+    profiles: ["quick-tunnel"]
+    restart: unless-stopped
+
 volumes:
   sqlserver_data:

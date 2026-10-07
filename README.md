@@ -14,6 +14,8 @@ docker compose -f docker-compose.prod.yml up --build -d
 
 Truy cập ứng dụng tại `http://localhost:8080`. Compose tự tạo database `SmartMenuDB`, khởi tạo schema và lưu dữ liệu SQL Server trong volume Docker.
 
+Để lấy URL HTTPS công khai tạm thời cho kiểm thử từ Internet, chạy `docker compose -f docker-compose.prod.yml --profile quick-tunnel up -d`, rồi xem URL `trycloudflare.com` bằng `docker compose -f docker-compose.prod.yml logs quick-tunnel`.
+
 ## Kiểm thử tích hợp
 
 Sau khi stack sẵn sàng, bộ kiểm thử sau xác nhận đăng ký/đăng nhập, phân quyền, upload Excel và ảnh menu, phân tích, blueprint/menu, giới hạn gói Plus, giao dịch thanh toán ở trạng thái `PENDING` và cách ly dữ liệu giữa người dùng:
