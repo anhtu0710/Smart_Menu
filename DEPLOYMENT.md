@@ -29,7 +29,13 @@ Script kiểm tra đăng ký, đăng nhập, phân quyền, upload hai file, ph�
 
 ## Public URL miễn phí để kiểm thử
 
-Khi chỉ cần kiểm thử từ Internet trong lúc máy đang bật, bật Cloudflare Quick Tunnel ngay trong Docker:
+Khi chỉ cần kiểm thử từ Internet trong lúc máy đang bật, sau khi Docker Desktop đã có trạng thái **Running**, chạy một lệnh tại thư mục dự án:
+
+```powershell
+.\scripts\start-public-tunnel.ps1
+```
+
+Script tự khởi động stack và in URL `https://...trycloudflare.com`. Nếu muốn thao tác thủ công, dùng:
 
 ```powershell
 docker compose -f docker-compose.prod.yml --profile quick-tunnel up -d

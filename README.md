@@ -14,7 +14,13 @@ docker compose -f docker-compose.prod.yml up --build -d
 
 Truy cập ứng dụng tại `http://localhost:8080`. Compose tự tạo database `SmartMenuDB`, khởi tạo schema và lưu dữ liệu SQL Server trong volume Docker.
 
-Để lấy URL HTTPS công khai tạm thời cho kiểm thử từ Internet, chạy `docker compose -f docker-compose.prod.yml --profile quick-tunnel up -d`, rồi xem URL `trycloudflare.com` bằng `docker compose -f docker-compose.prod.yml logs quick-tunnel`.
+Để lấy URL HTTPS công khai tạm thời cho kiểm thử từ Internet bằng một lệnh (sau khi Docker Desktop đã Running), chạy:
+
+```powershell
+.\scripts\start-public-tunnel.ps1
+```
+
+Script sẽ in URL `https://...trycloudflare.com` ngay trên terminal.
 
 ## Kiểm thử tích hợp
 
