@@ -7,9 +7,8 @@ $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
 $composeFile = Join-Path $projectRoot 'docker-compose.prod.yml'
 
-try {
-    docker info *> $null
-} catch {
+docker info 2>$null | Out-Null
+if ($LASTEXITCODE -ne 0) {
     throw 'Docker Desktop chưa sẵn sàng. Hãy mở Docker Desktop, chờ trạng thái Running rồi chạy lại lệnh này.'
 }
 
