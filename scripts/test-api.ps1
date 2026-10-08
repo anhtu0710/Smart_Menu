@@ -195,6 +195,12 @@ $paymentStatus = Invoke-RestMethod -Method Get -Uri "$ApiUrl/payment/check-statu
 Assert-Success $paymentStatus 'Kiểm tra giao dịch thanh toán'
 if ($paymentStatus.data.status -ne 'PENDING') { throw "Giao dịch mới phải ở PENDING, nhận được: $($paymentStatus.data.status)" }
 
+$unauthenticatedWebhook = Invoke-HttpWithStatus -Method Post -Uri "$ApiUrl/payment/callback" -ContentType 'application/json' -Body '{}'
+Assert-StatusCode $unauthenticatedWebhook 401 'Chặn webhook thanh toán không có token'
+
+$mockConfirmation = Invoke-HttpWithStatus -Method Post -Uri "$ApiUrl/payment/mock-confirm/$($payment.data.paymentId)" -WebSession $session
+Assert-StatusCode $mockConfirmation 404 'Tắt xác nhận thanh toán giả ở production'
+
 $otherSession = New-Object Microsoft.PowerShell.Commands.WebRequestSession
 $otherEmail = "forbidden_$([guid]::NewGuid().ToString('N').Substring(0, 12))@smartmenu.test"
 $otherRegister = @{ fullName = 'Other User'; email = $otherEmail; phone = '0900000001'; password = $password } | ConvertTo-Json
