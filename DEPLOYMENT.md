@@ -44,7 +44,9 @@ docker compose -f docker-compose.prod.yml logs quick-tunnel
 
 Lấy URL `https://...trycloudflare.com` trong log và mở URL đó trên điện thoại hoặc mạng khác. Chạy kiểm thử qua URL public bằng cách thêm `-ApiUrl 'https://...trycloudflare.com/api/v1'` vào `scripts/test-api.ps1`.
 
-Quick Tunnel không cần tài khoản Cloudflare nhưng URL sẽ đổi sau khi container/tunnel khởi động lại, không có cam kết uptime và bất kỳ ai biết URL đều có thể truy cập. Chỉ dùng cho dữ liệu test; khi cần hostname ổn định hoặc dùng thật, tạo Cloudflare Tunnel có tài khoản/domain theo phần production bên dưới.
+Cloudflare đôi khi cần một đến ba phút để DNS của Quick Tunnel mới hoạt động. Script mặc định sẽ chờ tối đa ba phút và **chỉ** in URL khi đã tự truy cập HTTPS thành công.
+
+Quick Tunnel không cần tài khoản Cloudflare nhưng URL sẽ đổi sau khi container/tunnel khởi động lại, không có cam kết uptime và bất kỳ ai biết URL đều có thể truy cập. Chỉ dùng cho dữ liệu test; khi cần hostname ổn định hoặc dùng thật, tạo Cloudflare Tunnel có tài khoản/domain theo phần production bên dưới. Mạng chạy Docker phải cho phép kết nối đi ra Cloudflare Tunnel qua UDP hoặc TCP cổng 7844; script sẽ báo rõ nếu mạng đang chặn kết nối này.
 
 ## Đưa lên production
 

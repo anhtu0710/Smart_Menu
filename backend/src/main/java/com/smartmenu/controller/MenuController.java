@@ -116,8 +116,9 @@ public class MenuController {
             throw new IllegalArgumentException("StyleId không được để trống");
         }
 
-        // Nghiệp vụ: Bản Free chỉ được tạo style HIEN_DAI, các style khác yêu cầu gói Plus
-        if (!"HIEN_DAI".equalsIgnoreCase(styleId)) {
+        // Bản Free được dùng phong cách Hiện Đại. COFFEE_MODERN_01 là mã
+        // template đã lưu của chính phong cách này, không phải một style Plus.
+        if (!isFreeModernStyle(styleId)) {
             var accessCheck = paymentService.checkAccess(userId);
             if (!"PAID".equalsIgnoreCase(accessCheck.getType())) {
                 log.warn("[PLUS-REQUIRED] Style {} chỉ dành cho gói Plus. Session={}, UserId={}", styleId, sessionId, userId);
@@ -178,8 +179,8 @@ public class MenuController {
 
         log.info("[AI-ARTWORK-API] Endpoint entered | sessionId={} | styleId={}", sessionId, styleId);
 
-        // Nghiệp vụ: Bản Free chỉ được tạo style HIEN_DAI, các style khác yêu cầu gói Plus
-        if (!"HIEN_DAI".equalsIgnoreCase(styleId)) {
+        // Bản Free được dùng phong cách Hiện Đại, gồm mã template đã lưu.
+        if (!isFreeModernStyle(styleId)) {
             var accessCheck = paymentService.checkAccess(userId);
             if (!"PAID".equalsIgnoreCase(accessCheck.getType())) {
                 log.warn("[PLUS-REQUIRED] Generate Artwork style {} yêu cầu gói Plus. Session={}, UserId={}", styleId, sessionId, userId);
@@ -256,8 +257,8 @@ public class MenuController {
 
         log.info("[LEGACY-API] generate-final-menu called | sessionId={} | styleId={}", sessionId, styleId);
 
-        // Nghiệp vụ: Bản Free chỉ được tạo style HIEN_DAI, các style khác yêu cầu gói Plus
-        if (!"HIEN_DAI".equalsIgnoreCase(styleId)) {
+        // Bản Free được dùng phong cách Hiện Đại, gồm mã template đã lưu.
+        if (!isFreeModernStyle(styleId)) {
             var accessCheck = paymentService.checkAccess(userId);
             if (!"PAID".equalsIgnoreCase(accessCheck.getType())) {
                 log.warn("[PLUS-REQUIRED] Generate Final Menu style {} yêu cầu gói Plus. Session={}, UserId={}", styleId, sessionId, userId);
@@ -324,6 +325,17 @@ public class MenuController {
             log.error("Lỗi sinh Final Menu cho Session {}: {}", sessionId, e.getMessage(), e);
             throw new RuntimeException("Không thể tạo Final Menu", e);
         }
+    }
+
+    private boolean isFreeModernStyle(String styleId) {
+        if (styleId == null) {
+            return true;
+        }
+
+        String normalizedStyle = styleId.trim().toUpperCase(java.util.Locale.ROOT);
+        return "HIEN_DAI".equals(normalizedStyle)
+                || "MODERN".equals(normalizedStyle)
+                || "COFFEE_MODERN_01".equals(normalizedStyle);
     }
 
     private List<com.smartmenu.dto.ProductItemDto> extractProductsFromBlueprint(VisualMenuBlueprintDto blueprint) {

@@ -1,5 +1,6 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 import { VisualMenuBlueprint } from '../../../../core/models/ai-menu.model';
 import { AiMenuService } from '../../../../core/services/ai-menu.service';
 
@@ -10,7 +11,7 @@ import { AiMenuService } from '../../../../core/services/ai-menu.service';
   templateUrl: './visual-menu-renderer.component.html',
   styleUrls: ['./visual-menu-renderer.component.scss']
 })
-export class VisualMenuRendererComponent implements OnChanges {
+export class VisualMenuRendererComponent implements OnChanges, OnDestroy {
   @Input() blueprint: VisualMenuBlueprint | null = null;
   @Input() styleId: string = 'HIEN_DAI';
   @Input() currentSessionId: number | string | null = null;
@@ -25,13 +26,24 @@ export class VisualMenuRendererComponent implements OnChanges {
   aspectRatio = 800 / 1131;
   manifest: any[] = [];
   isFullscreenModalOpen = false;
+  private fetchTimer: ReturnType<typeof setTimeout> | null = null;
+  private artworkRequest?: Subscription;
+  private activeRequestKey: string | null = null;
+  private completedRequestKey: string | null = null;
 
   constructor(private aiMenuService: AiMenuService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['styleId'] || changes['currentSessionId'] || changes['blueprint']) {
-      this.fetchFinalMenuImage();
+      this.scheduleFinalMenuImageFetch();
     }
+  }
+
+  ngOnDestroy(): void {
+    if (this.fetchTimer) {
+      clearTimeout(this.fetchTimer);
+    }
+    this.artworkRequest?.unsubscribe();
   }
 
   debugMode = false;
@@ -39,7 +51,31 @@ export class VisualMenuRendererComponent implements OnChanges {
   toggleDebugMode(): void {
     this.debugMode = !this.debugMode;
     console.log(`[FINAL-MENU] Toggle Debug Mode: ${this.debugMode}`);
-    this.fetchFinalMenuImage();
+    this.scheduleFinalMenuImageFetch();
+  }
+
+  /**
+   * Inputs are populated in a few consecutive change-detection passes after
+   * analysis. Delay briefly so only the final session/style pair triggers an
+   * expensive backend artwork render.
+   */
+  private scheduleFinalMenuImageFetch(): void {
+    if (!this.currentSessionId) {
+      this.artworkRequest?.unsubscribe();
+      this.activeRequestKey = null;
+      this.completedRequestKey = null;
+      this.finalImageUrl = null;
+      return;
+    }
+
+    if (this.fetchTimer) {
+      clearTimeout(this.fetchTimer);
+    }
+
+    this.fetchTimer = setTimeout(() => {
+      this.fetchTimer = null;
+      this.fetchFinalMenuImage();
+    }, 75);
   }
 
   /**
@@ -48,39 +84,60 @@ export class VisualMenuRendererComponent implements OnChanges {
   fetchFinalMenuImage(): void {
     if (!this.currentSessionId) return;
 
+    const requestKey = `${this.currentSessionId}:${this.styleId}:${this.debugMode}`;
+    if (this.activeRequestKey === requestKey || (this.completedRequestKey === requestKey && this.finalImageUrl)) {
+      return;
+    }
+
+    this.artworkRequest?.unsubscribe();
+    this.activeRequestKey = requestKey;
+
     console.log(`[AI-MENU-CLIENT] Fetching AI Artwork | styleId=${this.styleId} | sessionId=${this.currentSessionId}`);
 
     this.isGeneratingImage = true;
     this.isImageLoaded = false;
     this.isImageError = false;
 
-    this.aiMenuService.generateFinalMenuImage(this.currentSessionId, this.styleId, this.debugMode).subscribe({
+    this.artworkRequest = this.aiMenuService.generateFinalMenuImage(this.currentSessionId, this.styleId, this.debugMode).subscribe({
       next: (res) => {
+        if (this.activeRequestKey !== requestKey) return;
+
+        this.activeRequestKey = null;
         this.isGeneratingImage = false;
+        this.artworkRequest = undefined;
         if (res && res.success && res.data && res.data.finalImageUrl) {
           let url = res.data.finalImageUrl;
           if (url.startsWith('data:image/')) {
             this.finalImageUrl = url.replace(/[\r\n\s]/g, '');
           } else {
-            const host = url.startsWith('http') ? '' : 'http://localhost:8080';
-            this.finalImageUrl = `${host}${url}${url.includes('?') ? '&' : '?'}v=${Date.now()}`;
+            // In production the frontend proxies /api to the backend. Keeping
+            // this relative also works through Cloudflare HTTPS; hard-coding
+            // localhost would otherwise point to the visitor's own machine.
+            this.finalImageUrl = `${url}${url.includes('?') ? '&' : '?'}v=${Date.now()}`;
           }
 
           this.canvasWidth = res.data.canvasWidth || 800;
           this.canvasHeight = res.data.canvasHeight || 1131;
           this.aspectRatio = res.data.aspectRatio || (this.canvasWidth / this.canvasHeight);
           this.manifest = res.data.manifest || [];
+          this.completedRequestKey = requestKey;
 
           console.log(`[AI-MENU-CLIENT SUCCESS] Received AI Artwork for Session ${this.currentSessionId} (${this.canvasWidth}x${this.canvasHeight})`);
         } else {
           this.isImageError = true;
           this.finalImageUrl = null;
+          this.completedRequestKey = null;
         }
       },
       error: (err) => {
+        if (this.activeRequestKey !== requestKey) return;
+
+        this.activeRequestKey = null;
         this.isGeneratingImage = false;
+        this.artworkRequest = undefined;
         this.isImageError = true;
         this.finalImageUrl = null;
+        this.completedRequestKey = null;
         console.warn('[AI-MENU-CLIENT WARN] Backend AI generation error:', err);
       }
     });
